@@ -7,6 +7,7 @@ import java.util.Collections;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import au.gov.nla.atplugin.multiplecomponentidentifiers.editor.ArchDescComponentIdentifiersFields;
 import au.gov.nla.atplugin.multiplecomponentidentifiers.mydomain.NLADomainEditorFields;
 
 import com.jgoodies.forms.factories.*;
@@ -38,10 +39,6 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 	public ResourceBasicInfoPanel(PresentationModel detailsModel) {
 		this.detailsModel = detailsModel;
 		initComponents();
-		accessionsTable.setClazzAndColumns(AccessionsResources.PROPERTYNAME_ACCESSION_NUMBER,
-				AccessionsResources.class,
-				AccessionsResources.PROPERTYNAME_ACCESSION_NUMBER,
-				AccessionsResources.PROPERTYNAME_ACCESSION_TITLE);
 	}
 
 	public Component getInitialFocusComponent() {
@@ -120,36 +117,6 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 		return changeRepositoryButton;
 	}
 	
-	private void physicalDescriptionMouseClicked(MouseEvent e) {
-		if (e.getClickCount() == 2) {
-			/* tingram
-			try {
-				DomainEditor domainEditor = new DomainEditor(ArchDescriptionPhysicalDescriptions.class, editorField.getParentEditor(), "Physical Descriptions", new ArchDescPhysicalDescFields());
-				domainEditor.setCallingTable(physicalDescriptionsTable);
-				domainEditor.setNavigationButtonListeners(domainEditor);
-				editRelatedRecord(physicalDescriptionsTable, ArchDescriptionPhysicalDescriptions.class, true, domainEditor);
-			} catch (UnsupportedTableModelException e1) {
-				new ErrorDialog("Error creating editor for Dates", e1).showDialog();
-			}
-			*/
-		}
-	}
-	
-
-	
-	private void addPhysicalDescriptionActionPerformed() {
-		//addPhysicalDescriptionActionPerformed(physicalDescriptionsTable, resourceModel); tingram
-	}
-	
-
-	private void removePhysicalDescriptionActionPerformed() {
-		try {
-			this.removeRelatedTableRow(physicalDescriptionsTable, resourceModel);
-		} catch (ObjectNotRemovedException e1) {
-			new ErrorDialog("Physical description not removed", e1).showDialog();
-		}
-	}
-
 	private void instancesTableMouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
             // get the current instance record to edit
@@ -278,10 +245,6 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 		}
 	}
 
-	public DomainSortableTable getPhysicalDescriptionsTable() {
-		return physicalDescriptionsTable;
-	}
-
 	public DomainSortableTable getInstancesTable() {
 		return instancesTable;
 	}
@@ -292,6 +255,36 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 
 	public JButton getRemoveInstanceButton() {
 		return removeInstanceButton;
+	}
+
+	private void identifiersMouseClicked(MouseEvent e) {
+		if (e.getClickCount() == 2) {		
+			try {
+				DomainEditor domainEditor = new DomainEditor(ArchDescComponentIdentifiers.class, editorField.getParentEditor(), "Multiple Component Identifiers", new ArchDescComponentIdentifiersFields());
+				domainEditor.setCallingTable(identifiersTable);
+				domainEditor.setNavigationButtonListeners(domainEditor);
+				editRelatedRecord(identifiersTable, ArchDescComponentIdentifiers.class, true, domainEditor);
+			} catch (UnsupportedTableModelException e1) {
+				new ErrorDialog("Error creating editor for Identifiers", e1).showDialog();
+			}			
+		}
+	}
+
+	public DomainSortableTable getIdentifiersTable() {
+		return identifiersTable;
+	}
+
+	private void addIdentifierActionPerformed() {
+		// TODO add your code here
+		//addPhysicalDescriptionActionPerformed(physicalDescriptionsTable, resourceModel); tingram
+	}
+
+	private void removeIdentifierActionPerformed() {
+		try {
+			this.removeRelatedTableRow(identifiersTable, resourceModel);
+		} catch (ObjectNotRemovedException e1) {
+			new ErrorDialog("Identifier not removed", e1).showDialog();
+		}
 	}
 
 	private void initComponents() {
@@ -340,10 +333,10 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 		accessionsTable = new DomainSortableTable();
 		label_repositoryName5 = new JLabel();
 		scrollPane9 = new JScrollPane();
-		physicalDescriptionsTable = new DomainSortableTable(ArchDescriptionPhysicalDescriptions.class);
+		identifiersTable = new DomainSortableTable();
 		panel23 = new JPanel();
-		addPhysicalDescription = new JButton();
-		removePhysicalDescription = new JButton();
+		addIdentifier = new JButton();
+		removeIdentifier = new JButton();
 		panel39 = new JPanel();
 		panel40 = new JPanel();
 		label1 = new JLabel();
@@ -360,14 +353,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 		//======== this ========
 		setBackground(new Color(200, 205, 232));
 		setLayout(new FormLayout(
-			new ColumnSpec[] {
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC
-			},
-			RowSpec.decodeSpecs("default")));
+			"2*(default, $lcgap), default",
+			"default"));
 
 		//======== panel16 ========
 		{
@@ -375,46 +362,16 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 			panel16.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 			panel16.setBorder(Borders.DLU2_BORDER);
 			panel16.setLayout(new FormLayout(
-				ColumnSpec.decodeSpecs("default:grow"),
-				new RowSpec[] {
-					new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					new RowSpec(RowSpec.TOP, Sizes.DEFAULT, FormSpec.NO_GROW),
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					new RowSpec(RowSpec.TOP, Sizes.DEFAULT, FormSpec.NO_GROW),
-					FormFactory.LINE_GAP_ROWSPEC,
-					new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC
-				}));
+				"default:grow",
+				"fill:default:grow, 2*($lgap, default), $lgap, top:default, $lgap, default, $lgap, top:default, $lgap, fill:default:grow, $lgap, default"));
 
 			//======== panel19 ========
 			{
 				panel19.setOpaque(false);
 				panel19.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel19.setLayout(new FormLayout(
-					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(ColumnSpec.LEFT, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
-					},
-					new RowSpec[] {
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC
-					}));
+					"default, $lcgap, left:default:grow",
+					"3*(default, $lgap), fill:default:grow, $lgap, default"));
 
 				//---- label_resourcesLevel ----
 				label_resourcesLevel.setText("Level");
@@ -464,14 +421,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				{
 					tagApplicatorPanel.setOpaque(false);
 					tagApplicatorPanel.setLayout(new FormLayout(
-						new ColumnSpec[] {
-							FormFactory.DEFAULT_COLSPEC,
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							FormFactory.DEFAULT_COLSPEC,
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							FormFactory.DEFAULT_COLSPEC
-						},
-						RowSpec.decodeSpecs("default")));
+						"2*(default, $lcgap), default",
+						"default"));
 
 					//---- insertInlineTag ----
 					insertInlineTag.setOpaque(false);
@@ -517,12 +468,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel22.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel22.setMinimumSize(new Dimension(100, 29));
 				panel22.setLayout(new FormLayout(
-					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC
-					},
-					RowSpec.decodeSpecs("default")));
+					"default, $lcgap, default",
+					"default"));
 
 				//---- addDate ----
 				addDate.setText("Add Date");
@@ -552,12 +499,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 			{
 				panel1.setOpaque(false);
 				panel1.setLayout(new FormLayout(
-					new ColumnSpec[] {
-						new ColumnSpec(ColumnSpec.LEFT, Sizes.DEFAULT, FormSpec.NO_GROW),
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec("left:min(default;200px)")
-					},
-					RowSpec.decodeSpecs("default")));
+					"left:default, $lcgap, left:[default,200px]",
+					"default"));
 
 				//---- label_resourcesLanguageCode ----
 				label_resourcesLanguageCode.setText("Language");
@@ -599,16 +542,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel6.setOpaque(false);
 				panel6.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel6.setLayout(new FormLayout(
-					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
-					},
-					new RowSpec[] {
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC
-					}));
+					"default, $lcgap, default:grow",
+					"default, $lgap, default"));
 
 				//---- label_agreementReceived2 ----
 				label_agreementReceived2.setText("Repository");
@@ -657,22 +592,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel17.setOpaque(false);
 				panel17.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel17.setLayout(new FormLayout(
-					ColumnSpec.decodeSpecs("default:grow"),
-					new RowSpec[] {
-						new RowSpec(RowSpec.TOP, Sizes.DEFAULT, FormSpec.NO_GROW),
-						FormFactory.LINE_GAP_ROWSPEC,
-						new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC
-					}));
+					"default:grow",
+					"top:default, $lgap, fill:default:grow, 3*($lgap, default), $lgap, default:grow, $lgap, default"));
 
 				//======== panel12 ========
 				{
@@ -680,18 +601,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					panel12.setOpaque(false);
 					panel12.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 					panel12.setLayout(new FormLayout(
-						new ColumnSpec[] {
-							FormFactory.DEFAULT_COLSPEC,
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
-						},
-						RowSpec.decodeSpecs("default")));
+						"default, 4*($lcgap, default:grow)",
+						"default"));
 					((FormLayout)panel12.getLayout()).setColumnGroups(new int[][] {{3, 5, 7, 9}});
 
 					//---- label_resourceIdentifier1 ----
@@ -724,11 +635,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					panel42.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 					panel42.setBackground(new Color(182, 187, 212));
 					panel42.setLayout(new FormLayout(
-						ColumnSpec.decodeSpecs("default:grow"),
-						new RowSpec[] {
-							new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-							FormFactory.RELATED_GAP_ROWSPEC
-						}));
+						"default:grow",
+						"fill:default:grow, $rgap"));
 
 					//======== panel43 ========
 					{
@@ -736,12 +644,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 						panel43.setOpaque(false);
 						panel43.setBorder(Borders.DLU2_BORDER);
 						panel43.setLayout(new FormLayout(
-							ColumnSpec.decodeSpecs("default:grow"),
-							new RowSpec[] {
-								FormFactory.DEFAULT_ROWSPEC,
-								FormFactory.LINE_GAP_ROWSPEC,
-								new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
-							}));
+							"default:grow",
+							"default, $lgap, fill:default:grow"));
 
 						//---- OtherAccessionsLabel ----
 						OtherAccessionsLabel.setText("Accessions linked to this Resource ID:");
@@ -766,7 +670,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel17.add(panel42, cc.xy(1, 3));
 
 				//---- label_repositoryName5 ----
-				label_repositoryName5.setText("Physical Description");
+				label_repositoryName5.setText("Identifiers");
 				label_repositoryName5.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel17.add(label_repositoryName5, cc.xy(1, 5));
 
@@ -776,15 +680,15 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					scrollPane9.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 					scrollPane9.setPreferredSize(new Dimension(200, 104));
 
-					//---- physicalDescriptionsTable ----
-					physicalDescriptionsTable.setPreferredScrollableViewportSize(new Dimension(200, 100));
-					physicalDescriptionsTable.addMouseListener(new MouseAdapter() {
+					//---- identifiersTable ----
+					identifiersTable.setPreferredScrollableViewportSize(new Dimension(200, 100));
+					identifiersTable.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
-							physicalDescriptionMouseClicked(e);
+							identifiersMouseClicked(e);
 						}
 					});
-					scrollPane9.setViewportView(physicalDescriptionsTable);
+					scrollPane9.setViewportView(identifiersTable);
 				}
 				panel17.add(scrollPane9, cc.xywh(1, 7, 1, 1, CellConstraints.DEFAULT, CellConstraints.FILL));
 
@@ -795,34 +699,30 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					panel23.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 					panel23.setMinimumSize(new Dimension(100, 29));
 					panel23.setLayout(new FormLayout(
-						new ColumnSpec[] {
-							FormFactory.DEFAULT_COLSPEC,
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							FormFactory.DEFAULT_COLSPEC
-						},
-						RowSpec.decodeSpecs("default")));
+						"default, $lcgap, default",
+						"default"));
 
-					//---- addPhysicalDescription ----
-					addPhysicalDescription.setText("Add Description");
-					addPhysicalDescription.setOpaque(false);
-					addPhysicalDescription.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-					addPhysicalDescription.addActionListener(new ActionListener() {
+					//---- addIdentifier ----
+					addIdentifier.setText("Add Identifier");
+					addIdentifier.setOpaque(false);
+					addIdentifier.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+					addIdentifier.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							addPhysicalDescriptionActionPerformed();
+							addIdentifierActionPerformed();
 						}
 					});
-					panel23.add(addPhysicalDescription, cc.xy(1, 1));
+					panel23.add(addIdentifier, cc.xy(1, 1));
 
-					//---- removePhysicalDescription ----
-					removePhysicalDescription.setText("Remove Description");
-					removePhysicalDescription.setOpaque(false);
-					removePhysicalDescription.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-					removePhysicalDescription.addActionListener(new ActionListener() {
+					//---- removeIdentifier ----
+					removeIdentifier.setText("Remove Identifier");
+					removeIdentifier.setOpaque(false);
+					removeIdentifier.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+					removeIdentifier.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							removePhysicalDescriptionActionPerformed();
+							removeIdentifierActionPerformed();
 						}
 					});
-					panel23.add(removePhysicalDescription, cc.xy(3, 1));
+					panel23.add(removeIdentifier, cc.xy(3, 1));
 				}
 				panel17.add(panel23, cc.xywh(1, 9, 1, 1, CellConstraints.CENTER, CellConstraints.DEFAULT));
 
@@ -832,11 +732,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					panel39.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 					panel39.setBackground(new Color(182, 187, 212));
 					panel39.setLayout(new FormLayout(
-						ColumnSpec.decodeSpecs("default:grow"),
-						new RowSpec[] {
-							new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-							FormFactory.RELATED_GAP_ROWSPEC
-						}));
+						"default:grow",
+						"fill:default:grow, $rgap"));
 
 					//======== panel40 ========
 					{
@@ -844,14 +741,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 						panel40.setOpaque(false);
 						panel40.setBorder(Borders.DLU2_BORDER);
 						panel40.setLayout(new FormLayout(
-							ColumnSpec.decodeSpecs("default:grow"),
-							new RowSpec[] {
-								FormFactory.DEFAULT_ROWSPEC,
-								FormFactory.LINE_GAP_ROWSPEC,
-								new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-								FormFactory.LINE_GAP_ROWSPEC,
-								FormFactory.DEFAULT_ROWSPEC
-							}));
+							"default:grow",
+							"default, $lgap, fill:default:grow, $lgap, default"));
 
 						//---- label1 ----
 						label1.setText("Instances");
@@ -886,12 +777,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 							panel29.setOpaque(false);
 							panel29.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 							panel29.setLayout(new FormLayout(
-								new ColumnSpec[] {
-									FormFactory.DEFAULT_COLSPEC,
-									FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-									FormFactory.DEFAULT_COLSPEC
-								},
-								RowSpec.decodeSpecs("default")));
+								"default, $lcgap, default",
+								"default"));
 
 							//---- addInstanceButton ----
 							addInstanceButton.setText("Add Instance");
@@ -925,12 +812,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				{
 					panel2.setOpaque(false);
 					panel2.setLayout(new FormLayout(
-						new ColumnSpec[] {
-							FormFactory.DEFAULT_COLSPEC,
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							FormFactory.DEFAULT_COLSPEC
-						},
-						RowSpec.decodeSpecs("default")));
+						"default, $lcgap, default",
+						"default"));
 
 					//---- restrictionsApply2 ----
 					restrictionsApply2.setText("Internal Only");
@@ -999,10 +882,10 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 	private DomainSortableTable accessionsTable;
 	private JLabel label_repositoryName5;
 	private JScrollPane scrollPane9;
-	private DomainSortableTable physicalDescriptionsTable;
+	private DomainSortableTable identifiersTable;
 	private JPanel panel23;
-	private JButton addPhysicalDescription;
-	private JButton removePhysicalDescription;
+	private JButton addIdentifier;
+	private JButton removeIdentifier;
 	private JPanel panel39;
 	private JPanel panel40;
 	private JLabel label1;
@@ -1019,9 +902,9 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 	public void setModel(Resources resourcesModel) {
 		this.resourceModel = resourcesModel;
 		System.out.println("Resource set model: " + Integer.toHexString(System.identityHashCode(this.resourceModel)));
-		dateTable.updateCollection(this.resourceModel.getArchDescriptionDates());
-		physicalDescriptionsTable.updateCollection(this.resourceModel.getPhysicalDesctiptions());
-		instancesTable.updateCollection(this.resourceModel.getInstances());
+		//dateTable.updateCollection(this.resourceModel.getArchDescriptionDates());
+		//physicalDescriptionsTable.updateCollection(this.resourceModel.getPhysicalDesctiptions());
+		//instancesTable.updateCollection(this.resourceModel.getInstances());
 		setRepositoryText(this.resourceModel);
 
 	}

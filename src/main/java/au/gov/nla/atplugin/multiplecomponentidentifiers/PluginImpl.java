@@ -3,31 +3,21 @@ package au.gov.nla.atplugin.multiplecomponentidentifiers;
 import org.java.plugin.Plugin;
 import org.archiviststoolkit.plugin.ATPlugin;
 import org.archiviststoolkit.ApplicationFrame;
-import org.archiviststoolkit.hibernate.SessionFactory;
-import org.archiviststoolkit.util.UserPreferences;
-import org.archiviststoolkit.dialog.ErrorDialog;
-import org.archiviststoolkit.dialog.ATFileChooser;
 import org.archiviststoolkit.model.*;
-import org.archiviststoolkit.editor.AccessionFields;
 import org.archiviststoolkit.editor.ArchDescriptionFields;
 import org.archiviststoolkit.editor.ResourceComponentsFields;
 import org.archiviststoolkit.editor.ResourceFields;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
-import org.archiviststoolkit.swing.ATProgressUtil;
 import org.archiviststoolkit.mydomain.*;
-
-import au.gov.nla.atplugin.multiplecomponentidentifiers.panel.ResourceBasicInfoPanel;
-import au.gov.nla.atplugin.multiplecomponentidentifiers.panel.ResourceComponentBasicInfoPanel;
  
 import javax.swing.*;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.io.*;
- 
+
+import au.gov.nla.atplugin.multiplecomponentidentifiers.panel.ResourceBasicInfoPanel;
+import au.gov.nla.atplugin.multiplecomponentidentifiers.panel.ResourceComponentBasicInfoPanel;
+
 /**
 * Embedded Plugin.
 * 
@@ -97,29 +87,23 @@ public class PluginImpl extends Plugin implements ATPlugin {
      */
 	public HashMap getEmbeddedPanels() {
 		HashMap<String, JPanel> panels = new HashMap<String,JPanel>();
-		//panels.put("Component Identifiers", new ComponentIdentifiersPanel(currentDomainObject));
-		
+		//System.out.println(editorField);
 		if(editorField != null) {
-			if (editorField instanceof ResourceFields) {
-				System.out.println(editorField);
+			if (editorField instanceof ResourceFields) {				
 				if (resourceBasicInfoPanel == null) {
-					System.out.println("Panel null so creating new one" + "\n");
 					resourceBasicInfoPanel = new ResourceBasicInfoPanel(editorField.detailsModel);
 				}
 				resourceBasicInfoPanel.setEditorField(editorField);
 				panels.put("Basic Information::0::yes", resourceBasicInfoPanel);
-
 			} else if (editorField instanceof ResourceComponentsFields) {
-				System.out.println(editorField);
+				
 				if (resourceComponentBasicInfoPanel == null) {
-					System.out.println("Panel null so creating new one" + "\n");
 					resourceComponentBasicInfoPanel = new ResourceComponentBasicInfoPanel(editorField.detailsModel);
 				}
 				resourceComponentBasicInfoPanel.setEditorField(editorField);
 				panels.put("Basic Information::0::yes", resourceComponentBasicInfoPanel);
 			}
 		}
-		
 		return panels;
 	}
 	 

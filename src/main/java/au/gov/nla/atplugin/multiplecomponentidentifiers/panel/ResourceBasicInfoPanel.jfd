@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0_15" class="java.beans.XMLDecoder"> 
+<java version="1.5.0_20" class="java.beans.XMLDecoder"> 
  <object class="com.jformdesigner.model.FormModel"> 
   <void property="contentType"> 
    <string>form/swing</string> 
@@ -1451,7 +1451,7 @@
             <string>javax.swing.JLabel</string> 
             <void method="setProperty"> 
              <string>text</string> 
-             <string>Physical Description</string> 
+             <string>Identifiers</string> 
             </void> 
             <void method="setProperty"> 
              <string>font</string> 
@@ -1498,12 +1498,12 @@
                <object idref="Dimension1"/> 
               </void> 
               <void property="name"> 
-               <string>physicalDescriptionsTable</string> 
+               <string>identifiersTable</string> 
               </void> 
               <void method="auxiliary"> 
                <void method="setProperty"> 
                 <string>JavaCodeGenerator.customCreateCode</string> 
-                <string>new DomainSortableTable(ArchDescriptionPhysicalDescriptions.class);</string> 
+                <string>new DomainSortableTable();</string> 
                </void> 
                <void method="setProperty"> 
                 <string>JavaCodeGenerator.variableGetter</string> 
@@ -1514,7 +1514,7 @@
                <object class="com.jformdesigner.model.FormEvent"> 
                 <string>java.awt.event.MouseListener</string> 
                 <string>mouseClicked</string> 
-                <string>physicalDescriptionMouseClicked</string> 
+                <string>identifiersMouseClicked</string> 
                 <boolean>true</boolean> 
                </object> 
               </void> 
@@ -1571,7 +1571,7 @@
               <string>javax.swing.JButton</string> 
               <void method="setProperty"> 
                <string>text</string> 
-               <string>Add Description</string> 
+               <string>Add Identifier</string> 
               </void> 
               <void method="setProperty"> 
                <string>opaque</string> 
@@ -1582,13 +1582,19 @@
                <object idref="Font1"/> 
               </void> 
               <void property="name"> 
-               <string>addPhysicalDescription</string> 
+               <string>addIdentifier</string> 
+              </void> 
+              <void method="auxiliary"> 
+               <void method="setProperty"> 
+                <string>JavaCodeGenerator.variableName</string> 
+                <string>addIdentifier</string> 
+               </void> 
               </void> 
               <void method="addEvent"> 
                <object class="com.jformdesigner.model.FormEvent"> 
                 <string>java.awt.event.ActionListener</string> 
                 <string>actionPerformed</string> 
-                <string>addPhysicalDescriptionActionPerformed</string> 
+                <string>addIdentifierActionPerformed</string> 
                 <boolean>false</boolean> 
                </object> 
               </void> 
@@ -1602,7 +1608,7 @@
               <string>javax.swing.JButton</string> 
               <void method="setProperty"> 
                <string>text</string> 
-               <string>Remove Description</string> 
+               <string>Remove Identifier</string> 
               </void> 
               <void method="setProperty"> 
                <string>opaque</string> 
@@ -1613,13 +1619,13 @@
                <object idref="Font1"/> 
               </void> 
               <void property="name"> 
-               <string>removePhysicalDescription</string> 
+               <string>removeIdentifier</string> 
               </void> 
               <void method="addEvent"> 
                <object class="com.jformdesigner.model.FormEvent"> 
                 <string>java.awt.event.ActionListener</string> 
                 <string>actionPerformed</string> 
-                <string>removePhysicalDescriptionActionPerformed</string> 
+                <string>removeIdentifierActionPerformed</string> 
                 <boolean>false</boolean> 
                </object> 
               </void> 

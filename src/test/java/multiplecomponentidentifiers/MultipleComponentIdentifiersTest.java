@@ -7,15 +7,15 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import au.nla.gov.atplugin.multiplecomponentidentifiers.MultipleComponentIdentifiers;
+import au.gov.nla.atplugin.multiplecomponentidentifiers.PluginImpl;
 
 public class MultipleComponentIdentifiersTest {
 	
-	MultipleComponentIdentifiers multipleComponentIdentifiers;
+	PluginImpl multipleComponentIdentifiers;
 	
 	@Before
 	public void setup() {
-		multipleComponentIdentifiers = new MultipleComponentIdentifiers();
+		multipleComponentIdentifiers = new PluginImpl();
 	}
 	
 	@Test
