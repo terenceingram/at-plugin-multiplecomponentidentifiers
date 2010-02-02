@@ -275,8 +275,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 	}
 
 	private void addIdentifierActionPerformed() {
-		// TODO add your code here
-		//addPhysicalDescriptionActionPerformed(physicalDescriptionsTable, resourceModel); tingram
+		addIdentifierActionPerformed(identifiersTable);
 	}
 
 	private void removeIdentifierActionPerformed() {
@@ -353,8 +352,14 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 		//======== this ========
 		setBackground(new Color(200, 205, 232));
 		setLayout(new FormLayout(
-			"2*(default, $lcgap), default",
-			"default"));
+			new ColumnSpec[] {
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC
+			},
+			RowSpec.decodeSpecs("default")));
 
 		//======== panel16 ========
 		{
@@ -362,16 +367,46 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 			panel16.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 			panel16.setBorder(Borders.DLU2_BORDER);
 			panel16.setLayout(new FormLayout(
-				"default:grow",
-				"fill:default:grow, 2*($lgap, default), $lgap, top:default, $lgap, default, $lgap, top:default, $lgap, fill:default:grow, $lgap, default"));
+				ColumnSpec.decodeSpecs("default:grow"),
+				new RowSpec[] {
+					new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					new RowSpec(RowSpec.TOP, Sizes.DEFAULT, FormSpec.NO_GROW),
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					new RowSpec(RowSpec.TOP, Sizes.DEFAULT, FormSpec.NO_GROW),
+					FormFactory.LINE_GAP_ROWSPEC,
+					new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC
+				}));
 
 			//======== panel19 ========
 			{
 				panel19.setOpaque(false);
 				panel19.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel19.setLayout(new FormLayout(
-					"default, $lcgap, left:default:grow",
-					"3*(default, $lgap), fill:default:grow, $lgap, default"));
+					new ColumnSpec[] {
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						new ColumnSpec(ColumnSpec.LEFT, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
+					},
+					new RowSpec[] {
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
 				//---- label_resourcesLevel ----
 				label_resourcesLevel.setText("Level");
@@ -421,8 +456,14 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				{
 					tagApplicatorPanel.setOpaque(false);
 					tagApplicatorPanel.setLayout(new FormLayout(
-						"2*(default, $lcgap), default",
-						"default"));
+						new ColumnSpec[] {
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC
+						},
+						RowSpec.decodeSpecs("default")));
 
 					//---- insertInlineTag ----
 					insertInlineTag.setOpaque(false);
@@ -468,8 +509,12 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel22.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel22.setMinimumSize(new Dimension(100, 29));
 				panel22.setLayout(new FormLayout(
-					"default, $lcgap, default",
-					"default"));
+					new ColumnSpec[] {
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC
+					},
+					RowSpec.decodeSpecs("default")));
 
 				//---- addDate ----
 				addDate.setText("Add Date");
@@ -499,8 +544,12 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 			{
 				panel1.setOpaque(false);
 				panel1.setLayout(new FormLayout(
-					"left:default, $lcgap, left:[default,200px]",
-					"default"));
+					new ColumnSpec[] {
+						new ColumnSpec(ColumnSpec.LEFT, Sizes.DEFAULT, FormSpec.NO_GROW),
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						new ColumnSpec("left:min(default;200px)")
+					},
+					RowSpec.decodeSpecs("default")));
 
 				//---- label_resourcesLanguageCode ----
 				label_resourcesLanguageCode.setText("Language");
@@ -542,8 +591,16 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel6.setOpaque(false);
 				panel6.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel6.setLayout(new FormLayout(
-					"default, $lcgap, default:grow",
-					"default, $lgap, default"));
+					new ColumnSpec[] {
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
+					},
+					new RowSpec[] {
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
 				//---- label_agreementReceived2 ----
 				label_agreementReceived2.setText("Repository");
@@ -592,8 +649,22 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel17.setOpaque(false);
 				panel17.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel17.setLayout(new FormLayout(
-					"default:grow",
-					"top:default, $lgap, fill:default:grow, 3*($lgap, default), $lgap, default:grow, $lgap, default"));
+					ColumnSpec.decodeSpecs("default:grow"),
+					new RowSpec[] {
+						new RowSpec(RowSpec.TOP, Sizes.DEFAULT, FormSpec.NO_GROW),
+						FormFactory.LINE_GAP_ROWSPEC,
+						new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
 				//======== panel12 ========
 				{
@@ -601,8 +672,18 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					panel12.setOpaque(false);
 					panel12.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 					panel12.setLayout(new FormLayout(
-						"default, 4*($lcgap, default:grow)",
-						"default"));
+						new ColumnSpec[] {
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
+						},
+						RowSpec.decodeSpecs("default")));
 					((FormLayout)panel12.getLayout()).setColumnGroups(new int[][] {{3, 5, 7, 9}});
 
 					//---- label_resourceIdentifier1 ----
@@ -635,8 +716,11 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					panel42.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 					panel42.setBackground(new Color(182, 187, 212));
 					panel42.setLayout(new FormLayout(
-						"default:grow",
-						"fill:default:grow, $rgap"));
+						ColumnSpec.decodeSpecs("default:grow"),
+						new RowSpec[] {
+							new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+							FormFactory.RELATED_GAP_ROWSPEC
+						}));
 
 					//======== panel43 ========
 					{
@@ -644,8 +728,12 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 						panel43.setOpaque(false);
 						panel43.setBorder(Borders.DLU2_BORDER);
 						panel43.setLayout(new FormLayout(
-							"default:grow",
-							"default, $lgap, fill:default:grow"));
+							ColumnSpec.decodeSpecs("default:grow"),
+							new RowSpec[] {
+								FormFactory.DEFAULT_ROWSPEC,
+								FormFactory.LINE_GAP_ROWSPEC,
+								new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
+							}));
 
 						//---- OtherAccessionsLabel ----
 						OtherAccessionsLabel.setText("Accessions linked to this Resource ID:");
@@ -699,8 +787,12 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					panel23.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 					panel23.setMinimumSize(new Dimension(100, 29));
 					panel23.setLayout(new FormLayout(
-						"default, $lcgap, default",
-						"default"));
+						new ColumnSpec[] {
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC
+						},
+						RowSpec.decodeSpecs("default")));
 
 					//---- addIdentifier ----
 					addIdentifier.setText("Add Identifier");
@@ -732,8 +824,11 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					panel39.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 					panel39.setBackground(new Color(182, 187, 212));
 					panel39.setLayout(new FormLayout(
-						"default:grow",
-						"fill:default:grow, $rgap"));
+						ColumnSpec.decodeSpecs("default:grow"),
+						new RowSpec[] {
+							new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+							FormFactory.RELATED_GAP_ROWSPEC
+						}));
 
 					//======== panel40 ========
 					{
@@ -741,8 +836,14 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 						panel40.setOpaque(false);
 						panel40.setBorder(Borders.DLU2_BORDER);
 						panel40.setLayout(new FormLayout(
-							"default:grow",
-							"default, $lgap, fill:default:grow, $lgap, default"));
+							ColumnSpec.decodeSpecs("default:grow"),
+							new RowSpec[] {
+								FormFactory.DEFAULT_ROWSPEC,
+								FormFactory.LINE_GAP_ROWSPEC,
+								new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+								FormFactory.LINE_GAP_ROWSPEC,
+								FormFactory.DEFAULT_ROWSPEC
+							}));
 
 						//---- label1 ----
 						label1.setText("Instances");
@@ -777,8 +878,12 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 							panel29.setOpaque(false);
 							panel29.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 							panel29.setLayout(new FormLayout(
-								"default, $lcgap, default",
-								"default"));
+								new ColumnSpec[] {
+									FormFactory.DEFAULT_COLSPEC,
+									FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+									FormFactory.DEFAULT_COLSPEC
+								},
+								RowSpec.decodeSpecs("default")));
 
 							//---- addInstanceButton ----
 							addInstanceButton.setText("Add Instance");
@@ -812,8 +917,12 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				{
 					panel2.setOpaque(false);
 					panel2.setLayout(new FormLayout(
-						"default, $lcgap, default",
-						"default"));
+						new ColumnSpec[] {
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC
+						},
+						RowSpec.decodeSpecs("default")));
 
 					//---- restrictionsApply2 ----
 					restrictionsApply2.setText("Internal Only");

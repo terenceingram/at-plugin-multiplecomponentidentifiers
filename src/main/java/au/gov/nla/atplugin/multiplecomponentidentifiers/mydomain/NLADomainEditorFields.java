@@ -10,10 +10,11 @@ import org.archiviststoolkit.ApplicationFrame;
 import org.archiviststoolkit.plugin.ATPlugin;
 import org.archiviststoolkit.plugin.ATPluginFactory;
 import org.archiviststoolkit.dialog.ErrorDialog;
-//import edu.byu.plugins.editors.ArchDescriptionDatesFields;
-//import edu.byu.plugins.editors.ArchDescPhysicalDescFields;
+
+import au.gov.nla.atplugin.multiplecomponentidentifiers.editor.ArchDescComponentIdentifiersFields;
 
 import javax.swing.*;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -23,7 +24,36 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
 	private static final long serialVersionUID = 7048825913960121458L;
 	
 	protected DomainEditorFields editorField;
+	
+	protected void addIdentifierActionPerformed(DomainSortableTable identifierTable) {
+		ArchDescComponentIdentifiers newArchDescComponentIdentifier;
+		DomainEditor dialog = new DomainEditor(ArchDescComponentIdentifiers.class, editorField.getParentEditor(), "Add Identifier", new ArchDescComponentIdentifiersFields());
+		dialog.setNavigationButtonListeners((ActionListener)editorField.getParentEditor());
+		dialog.setNewRecord(true);
+		
+		/*
+		boolean done = false;
+		int returnStatus;
+		while (!done) {
+			newArchDescPhysDesc = new ArchDescriptionPhysicalDescriptions(accessionsResourcesCommonModel);
+			dialogArchDescPhysDesc.setModel(newArchDescPhysDesc, null);
+			returnStatus = dialogArchDescPhysDesc.showDialog();
+			if (returnStatus == JOptionPane.OK_OPTION) {
+				accessionsResourcesCommonModel.addPhysicalDesctiptions(newArchDescPhysDesc);
+				physicalDescriptionTable.updateCollection(accessionsResourcesCommonModel.getPhysicalDesctiptions());
+				done = true;
+			} else if (returnStatus == StandardEditor.OK_AND_ANOTHER_OPTION) {
+				accessionsResourcesCommonModel.addPhysicalDesctiptions(newArchDescPhysDesc);
+				physicalDescriptionTable.updateCollection(accessionsResourcesCommonModel.getPhysicalDesctiptions());
+			} else {
+				done = true;
+			}
+		}
+		*/
+	}
 
+	
+	
 	public void removeRelatedTableRow(DomainGlazedListTable relatedTable, DomainObject model) throws ObjectNotRemovedException {
 		int selectedRow = relatedTable.getSelectedRow();
 		if (selectedRow == -1) {
