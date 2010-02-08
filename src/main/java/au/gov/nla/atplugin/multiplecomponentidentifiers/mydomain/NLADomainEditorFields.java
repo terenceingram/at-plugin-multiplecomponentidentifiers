@@ -3,7 +3,6 @@ package au.gov.nla.atplugin.multiplecomponentidentifiers.mydomain;
 import org.archiviststoolkit.mydomain.*;
 import org.archiviststoolkit.model.*;
 import org.archiviststoolkit.swing.StandardEditor;
-import org.archiviststoolkit.swing.SelectFromList;
 import org.archiviststoolkit.exceptions.ObjectNotRemovedException;
 import org.archiviststoolkit.exceptions.DomainEditorCreationException;
 import org.archiviststoolkit.ApplicationFrame;
@@ -17,7 +16,6 @@ import javax.swing.*;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public abstract class NLADomainEditorFields extends DomainEditorFields {
 	
@@ -25,31 +23,37 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
 	
 	protected DomainEditorFields editorField;
 	
-	protected void addIdentifierActionPerformed(DomainSortableTable identifierTable) {
+	/**
+	 * The "Add Identifier" button is clicked on the panel.
+	 * 
+	 * @param identifierTable
+	 */
+	protected void addIdentifierActionPerformed(DomainSortableTable identifierTable, Resources resourcesModel) {
 		ArchDescComponentIdentifiers newArchDescComponentIdentifier;
 		DomainEditor dialog = new DomainEditor(ArchDescComponentIdentifiers.class, editorField.getParentEditor(), "Add Identifier", new ArchDescComponentIdentifiersFields());
 		dialog.setNavigationButtonListeners((ActionListener)editorField.getParentEditor());
 		dialog.setNewRecord(true);
-		
-		/*
+				
 		boolean done = false;
 		int returnStatus;
 		while (!done) {
-			newArchDescPhysDesc = new ArchDescriptionPhysicalDescriptions(accessionsResourcesCommonModel);
-			dialogArchDescPhysDesc.setModel(newArchDescPhysDesc, null);
-			returnStatus = dialogArchDescPhysDesc.showDialog();
+			newArchDescComponentIdentifier = new ArchDescComponentIdentifiers(resourcesModel);
+			dialog.setModel(newArchDescComponentIdentifier, null);
+			returnStatus = dialog.showDialog();
+			
 			if (returnStatus == JOptionPane.OK_OPTION) {
-				accessionsResourcesCommonModel.addPhysicalDesctiptions(newArchDescPhysDesc);
-				physicalDescriptionTable.updateCollection(accessionsResourcesCommonModel.getPhysicalDesctiptions());
+				resourcesModel.addArchDescComponentIdentifier(newArchDescComponentIdentifier);
+				identifierTable.updateCollection(resourcesModel.getArchDescComponentIdentifiers());
 				done = true;
 			} else if (returnStatus == StandardEditor.OK_AND_ANOTHER_OPTION) {
-				accessionsResourcesCommonModel.addPhysicalDesctiptions(newArchDescPhysDesc);
-				physicalDescriptionTable.updateCollection(accessionsResourcesCommonModel.getPhysicalDesctiptions());
+				//accessionsResourcesCommonModel.addPhysicalDesctiptions(newArchDescPhysDesc);
+				resourcesModel.addArchDescComponentIdentifier(newArchDescComponentIdentifier);
+				identifierTable.updateCollection(resourcesModel.getArchDescComponentIdentifiers());
 			} else {
 				done = true;
 			}
 		}
-		*/
+		
 	}
 
 	
@@ -66,7 +70,7 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
                 ArrayList<DomainObject> relatedObjects = relatedTable.removeSelectedRows();
                 for (DomainObject relatedObject: relatedObjects) {
 					removeRelatedObject(model, relatedObject);
-//                    model.removeRelatedObject(relatedObject);
+                    //model.removeRelatedObject(relatedObject);
                 }
                 int rowCount = relatedTable.getRowCount();
                 if (rowCount == 0) {
@@ -84,8 +88,6 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
 
 	private void removeRelatedObject(DomainObject model, DomainObject objectToRemove) throws ObjectNotRemovedException {
 
-//		if (model instanceof Accessions) {
-
 			//this must be done because date and physical descriptions are not handled in the
 			//remove related object method in accessions
 			// todo add this to the removeRelatedObject method in ArchDescription class
@@ -93,12 +95,13 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
 				if (objectToRemove == null)
 					throw new IllegalArgumentException("Can't remove a date.");
 				((ArchDescription)model).getArchDescriptionDates().remove(objectToRemove);
+			} else if (objectToRemove instanceof ArchDescComponentIdentifiers) {
+				System.out.println("removing : " + objectToRemove + " from " + model );
+				((Resources)model).getArchDescComponentIdentifiers().remove((ArchDescComponentIdentifiers)objectToRemove);
 			} else {
-				//model.removeRelatedObject(objectToRemove); tingram commented out
+				model.removeRelatedObject(objectToRemove);
 			}
-//		} else {
-//			model.removeRelatedObject(objectToRemove);
-//		}
+
 	}
 
 	protected int editRelatedRecord(DomainGlazedListTable table, Class clazz, Boolean buffered, DomainEditor domainEditor) {

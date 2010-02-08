@@ -30,8 +30,8 @@ import au.gov.nla.atplugin.multiplecomponentidentifiers.panel.ResourceComponentB
 public class PluginImpl extends Plugin implements ATPlugin {
 	
 	
-	protected Resources resources;
-	protected ResourcesComponents resourcesComponents;
+	protected Resources resourcesModel;
+	protected ResourcesComponents resourcesComponentsModel;
 	
 	protected DomainEditorFields editorField;
 	private ResourceBasicInfoPanel resourceBasicInfoPanel = null;
@@ -124,15 +124,16 @@ public class PluginImpl extends Plugin implements ATPlugin {
 	*/
 	public void setModel(DomainObject domainObject, InfiniteProgressPanel monitor) {
 		
-		System.out.println("setModel: " + Integer.toHexString(System.identityHashCode(domainObject)));
+		System.out.println("setModel within PluginImpl: " + Integer.toHexString(System.identityHashCode(domainObject)));
 		
 		if (domainObject instanceof Resources) {
-			resources = (Resources)domainObject;
-			System.out.println("Resource: " + Integer.toHexString(System.identityHashCode(resources)));
+			resourcesModel = (Resources)domainObject;
+			resourceBasicInfoPanel.setModel(resourcesModel);
+			System.out.println("Resource: " + Integer.toHexString(System.identityHashCode(resourcesModel)));
 		} else if (domainObject instanceof ResourcesComponents) {
-			resourcesComponents = (ResourcesComponents)domainObject;
-			System.out.println("Component: " + resourcesComponents);
-			resourceComponentBasicInfoPanel.setModel(resourcesComponents);
+			resourcesComponentsModel = (ResourcesComponents)domainObject;
+			resourceComponentBasicInfoPanel.setModel(resourcesComponentsModel);
+			System.out.println("Component: " + resourcesComponentsModel);
 		}
 	}
 	 

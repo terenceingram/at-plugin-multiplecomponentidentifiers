@@ -7,7 +7,6 @@ import com.jgoodies.forms.layout.*;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.model.ArchDescComponentIdentifiers;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
-import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 	
@@ -16,7 +15,7 @@ public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 	}
 
 	public Component getInitialFocusComponent() {
-		return null;
+		return identifierType;
 	}
 
 	private void initComponents() {
@@ -45,8 +44,8 @@ public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 			mainPanel.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 			mainPanel.setBackground(new Color(200, 205, 232));
 			mainPanel.setLayout(new FormLayout(
-				"2*([150px,default], 5px), [150px,default]",
-				"4*(default, 3px), default"));
+				"max(min;150px), 5px, max(min;150px), 5px, max(default;150px)",
+				"default, 3px, default, 3px, default, 3px, default, 3px, default"));
 
 			//---- label3 ----
 			label3.setText("Identifier Type");

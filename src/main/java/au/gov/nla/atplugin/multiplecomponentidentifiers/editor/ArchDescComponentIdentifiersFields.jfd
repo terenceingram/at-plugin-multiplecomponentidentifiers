@@ -47,7 +47,7 @@
          <class>com.jgoodies.forms.layout.FormLayout</class> 
          <void method="setProperty"> 
           <string>$columnSpecs</string> 
-          <string>max(default;150px), 5px, max(default;150px), 5px, max(default;150px)</string> 
+          <string>max(min;150px), 5px, max(min;150px), 5px, max(default;150px)</string> 
          </void> 
          <void method="setProperty"> 
           <string>$rowSpecs</string> 

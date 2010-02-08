@@ -25,8 +25,6 @@ import org.archiviststoolkit.exceptions.ObjectNotRemovedException;
 import org.archiviststoolkit.exceptions.DomainEditorCreationException;
 import org.archiviststoolkit.ApplicationFrame;
 import org.archiviststoolkit.editor.ArchDescriptionInstancesEditor;
-//import edu.byu.plugins.editors.ArchDescriptionDatesFields;
-//import edu.byu.plugins.editors.ArchDescPhysicalDescFields;
 
 public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 
@@ -39,6 +37,17 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 	public ResourceBasicInfoPanel(PresentationModel detailsModel) {
 		this.detailsModel = detailsModel;
 		initComponents();
+		
+		accessionsTable.setClazzAndColumns(AccessionsResources.PROPERTYNAME_ACCESSION_NUMBER,
+				AccessionsResources.class,
+				AccessionsResources.PROPERTYNAME_ACCESSION_NUMBER,
+				AccessionsResources.PROPERTYNAME_ACCESSION_TITLE);
+		
+		identifiersTable.setClazzAndColumns(ArchDescComponentIdentifiers.PROPERTYNAME_IDENTIFIER_TYPE, 
+				ArchDescComponentIdentifiers.class,
+				ArchDescComponentIdentifiers.PROPERTYNAME_IDENTIFIER_TYPE,
+				ArchDescComponentIdentifiers.PROPERTYNAME_IDENTIFIER_LABEL,
+				ArchDescComponentIdentifiers.PROPERTYNAME_COMPONENT_IDENTIFIER);
 	}
 
 	public Component getInitialFocusComponent() {
@@ -275,7 +284,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 	}
 
 	private void addIdentifierActionPerformed() {
-		addIdentifierActionPerformed(identifiersTable);
+		addIdentifierActionPerformed(identifiersTable, resourceModel);
 	}
 
 	private void removeIdentifierActionPerformed() {
@@ -1010,12 +1019,12 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 
 	public void setModel(Resources resourcesModel) {
 		this.resourceModel = resourcesModel;
-		System.out.println("Resource set model: " + Integer.toHexString(System.identityHashCode(this.resourceModel)));
-		//dateTable.updateCollection(this.resourceModel.getArchDescriptionDates());
+		System.out.println("Resource set model ResourceBasicInfoPanel: " + Integer.toHexString(System.identityHashCode(this.resourceModel)));
+		identifiersTable.updateCollection(this.resourceModel.getArchDescComponentIdentifiers());
+		dateTable.updateCollection(this.resourceModel.getArchDescriptionDates());
 		//physicalDescriptionsTable.updateCollection(this.resourceModel.getPhysicalDesctiptions());
-		//instancesTable.updateCollection(this.resourceModel.getInstances());
+		instancesTable.updateCollection(this.resourceModel.getInstances());
 		setRepositoryText(this.resourceModel);
-
 	}
 	
 }
