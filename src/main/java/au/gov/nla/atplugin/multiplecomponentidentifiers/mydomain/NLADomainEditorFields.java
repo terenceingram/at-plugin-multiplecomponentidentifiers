@@ -46,7 +46,6 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
 				identifierTable.updateCollection(resourcesModel.getArchDescComponentIdentifiers());
 				done = true;
 			} else if (returnStatus == StandardEditor.OK_AND_ANOTHER_OPTION) {
-				//accessionsResourcesCommonModel.addPhysicalDesctiptions(newArchDescPhysDesc);
 				resourcesModel.addArchDescComponentIdentifier(newArchDescComponentIdentifier);
 				identifierTable.updateCollection(resourcesModel.getArchDescComponentIdentifiers());
 			} else {
@@ -95,13 +94,9 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
 				if (objectToRemove == null)
 					throw new IllegalArgumentException("Can't remove a date.");
 				((ArchDescription)model).getArchDescriptionDates().remove(objectToRemove);
-			} else if (objectToRemove instanceof ArchDescComponentIdentifiers) {
-				System.out.println("removing : " + objectToRemove + " from " + model );
-				((Resources)model).getArchDescComponentIdentifiers().remove((ArchDescComponentIdentifiers)objectToRemove);
 			} else {
 				model.removeRelatedObject(objectToRemove);
 			}
-
 	}
 
 	protected int editRelatedRecord(DomainGlazedListTable table, Class clazz, Boolean buffered, DomainEditor domainEditor) {

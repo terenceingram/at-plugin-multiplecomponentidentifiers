@@ -33,24 +33,6 @@
 		<version>4.4</version>
 		<scope>test</scope>
 	</dependency>
-	<!-- dependency>
-		<groupId>hibernate</groupId>
-		<artifactId>hibernate</artifactId>
-		<version>3.0</version>
-		<scope>provided</scope>
-		<exclusions>
-        <exclusion>
-          <groupId>javax.security</groupId>
-          <artifactId>jacc</artifactId>
-        </exclusion>
-      </exclusions>
-	</dependency>
-	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-core</artifactId>
-		<version>3.3.2.GA</version>
-		<scope>provided</scope>
-	</dependency-->
 	<dependency>
 		<groupId>net.sf.jpf</groupId>
 		<artifactId>jpf</artifactId>
