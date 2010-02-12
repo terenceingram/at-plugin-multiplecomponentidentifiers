@@ -54,12 +54,10 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 		return resourcesLevel;
 	}
 
-	
 	private void resourcesLevelActionPerformed() {
-		//setOtherLevelEnabledDisabled(resourcesLevel, label_otherLevel, resourcesOtherLevel); tingram
+		setOtherLevelEnabledDisabled(resourcesLevel, label_otherLevel, resourcesOtherLevel);
 	}
 	
-
 	private void insertInlineTagActionPerformed() {
 		InLineTagsUtils.wrapInTagActionPerformed(insertInlineTag, resourcesTitle, editorField.getParentEditor());
 	}
@@ -67,9 +65,12 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 	private void changeRepositoryButtonActionPerformed() {
 		Vector repositories = Repositories.getRepositoryList();
 		ImageIcon icon = null;
-		Repositories currentRepostory = ((Resources) this.getModel()).getRepository();
-		Resources model = (Resources) this.getModel();
-        SelectFromList dialog = new SelectFromList(this.getParentEditor(), "Select a repository", repositories.toArray());
+		
+		//Repositories currentRepostory = ((Resources) this.getModel()).getRepository();
+		Repositories currentRepostory = this.resourceModel.getRepository();
+		Resources model = resourceModel;
+        //SelectFromList dialog = new SelectFromList(this.getParentEditor(), "Select a repository", repositories.toArray());
+		SelectFromList dialog = new SelectFromList(editorField.getParentEditor(), "Select a repository", repositories.toArray());
         dialog.setSelectedValue(currentRepostory);
         if (dialog.showDialog() == JOptionPane.OK_OPTION) {
             model.setRepository((Repositories)dialog.getSelectedValue());
@@ -137,8 +138,8 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 			// add a special entry for digital object link to the possibilities vector
             possibilities.add(ArchDescriptionInstances.DIGITAL_OBJECT_INSTANCE_LINK);
             Collections.sort(possibilities);
-
-            dialogInstances = (ArchDescriptionInstancesEditor) DomainEditorFactory.getInstance().createDomainEditorWithParent(ArchDescriptionInstances.class, getParentEditor(), getInstancesTable());
+            //dialogInstances = (ArchDescriptionInstancesEditor) DomainEditorFactory.getInstance().createDomainEditorWithParent(ArchDescriptionInstances.class, getParentEditor(), getInstancesTable());
+            dialogInstances = (ArchDescriptionInstancesEditor) DomainEditorFactory.getInstance().createDomainEditorWithParent(ArchDescriptionInstances.class, editorField.getParentEditor(), getInstancesTable());
 		} catch (DomainEditorCreationException e) {
 			new ErrorDialog(getParentEditor(), "Error creating editor for ArchDescriptionInstances", e).showDialog();
 		}
@@ -155,7 +156,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				if (defaultInstanceType.equalsIgnoreCase(ArchDescriptionInstances.DIGITAL_OBJECT_INSTANCE)) {
 					newInstance = new ArchDescriptionDigitalInstances(resourceModel,
                             (Resources) editorField.getModel());
-					//addDatesToNewDigitalInstance((ArchDescriptionDigitalInstances)newInstance, resourceModel); tingram
+					addDatesToNewDigitalInstance((ArchDescriptionDigitalInstances)newInstance, resourceModel);
 				} else if (defaultInstanceType.equalsIgnoreCase(ArchDescriptionInstances.DIGITAL_OBJECT_INSTANCE_LINK)) {
                     // add a digital object link or links instead
                     addDigitalInstanceLink((Resources) editorField.getModel());
@@ -650,14 +651,14 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					new ColumnSpec[] {
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
 					},
 					RowSpec.decodeSpecs("default")));
 
 				//---- label_agreementReceived2 ----
-				label_agreementReceived2.setText("Repository");
+				label_agreementReceived2.setText("Repository:");
 				label_agreementReceived2.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				ATFieldInfo.assignLabelInfo(label_agreementReceived2, Resources.class, Resources.PROPERTYNAME_REPOSITORY);
 				panel6.add(label_agreementReceived2, cc.xy(1, 1));
@@ -667,20 +668,20 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				repositoryName.setOpaque(false);
 				repositoryName.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				repositoryName.setBorder(null);
-				panel6.add(repositoryName, cc.xy(5, 1));
+				panel6.add(repositoryName, cc.xy(3, 1));
+
+				//---- changeRepositoryButton ----
+				changeRepositoryButton.setText("Change");
+				changeRepositoryButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+				changeRepositoryButton.setOpaque(false);
+				changeRepositoryButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						changeRepositoryButtonActionPerformed();
+					}
+				});
+				panel6.add(changeRepositoryButton, cc.xywh(5, 1, 1, 1, CellConstraints.CENTER, CellConstraints.DEFAULT));
 			}
 			panel16.add(panel6, cc.xy(1, 17));
-
-			//---- changeRepositoryButton ----
-			changeRepositoryButton.setText("Change");
-			changeRepositoryButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-			changeRepositoryButton.setOpaque(false);
-			changeRepositoryButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					changeRepositoryButtonActionPerformed();
-				}
-			});
-			panel16.add(changeRepositoryButton, cc.xywh(1, 19, 1, 1, CellConstraints.CENTER, CellConstraints.DEFAULT));
 		}
 		add(panel16, cc.xywh(1, 1, 1, 1, CellConstraints.FILL, CellConstraints.DEFAULT));
 
@@ -695,7 +696,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 			panel13.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 			panel13.setBorder(Borders.DLU2_BORDER);
 			panel13.setLayout(new FormLayout(
-				ColumnSpec.decodeSpecs("default:grow"),
+				ColumnSpec.decodeSpecs("default:grow, 3dlu"),
 				new RowSpec[] {
 					new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
@@ -773,15 +774,15 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 					new ColumnSpec[] {
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(ColumnSpec.LEFT, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(Sizes.DLUX3),
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						FormFactory.DEFAULT_COLSPEC
 					},
-					new RowSpec[] {
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC
-					}));
+					RowSpec.decodeSpecs("default")));
 
 				//---- label_resourcesLevel ----
 				label_resourcesLevel.setText("Level");
@@ -803,11 +804,11 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				label_otherLevel.setText("Other Level");
 				label_otherLevel.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				ATFieldInfo.assignLabelInfo(label_otherLevel, Resources.class, Resources.PROPERTYNAME_OTHER_LEVEL);
-				panel19.add(label_otherLevel, cc.xy(1, 3));
+				panel19.add(label_otherLevel, cc.xy(5, 1));
 
 				//---- resourcesOtherLevel ----
 				resourcesOtherLevel.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-				panel19.add(resourcesOtherLevel, new CellConstraints(3, 3, 3, 1, CellConstraints.FILL, CellConstraints.TOP, new Insets( 0, 0, 0, 5)));
+				panel19.add(resourcesOtherLevel, new CellConstraints(7, 1, 3, 1, CellConstraints.FILL, CellConstraints.TOP, new Insets( 0, 0, 0, 5)));
 			}
 			panel13.add(panel19, cc.xy(1, 3));
 
@@ -1038,9 +1039,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 
 	public void setModel(Resources resourcesModel) {
 		this.resourceModel = resourcesModel;
-		System.out.println("Resource set model ResourceBasicInfoPanel: " + Integer.toHexString(System.identityHashCode(this.resourceModel)));
 		identifiersTable.updateCollection(this.resourceModel.getArchDescComponentIdentifiers());
-		//physicalDescriptionsTable.updateCollection(this.resourceModel.getPhysicalDesctiptions());
 		instancesTable.updateCollection(this.resourceModel.getInstances());
 		setRepositoryText(this.resourceModel);
 	}

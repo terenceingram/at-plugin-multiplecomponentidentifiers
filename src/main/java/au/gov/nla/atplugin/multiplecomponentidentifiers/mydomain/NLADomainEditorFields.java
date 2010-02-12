@@ -28,7 +28,7 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
 	 * 
 	 * @param identifierTable
 	 */
-	protected void addIdentifierActionPerformed(DomainSortableTable identifierTable, Resources resourcesModel) {
+	protected void addIdentifierActionPerformed(DomainSortableTable identifierTable, Resources model) {
 		ArchDescComponentIdentifiers newArchDescComponentIdentifier;
 		DomainEditor dialog = new DomainEditor(ArchDescComponentIdentifiers.class, editorField.getParentEditor(), "Add Identifier", new ArchDescComponentIdentifiersFields());
 		dialog.setNavigationButtonListeners((ActionListener)editorField.getParentEditor());
@@ -37,25 +37,49 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
 		boolean done = false;
 		int returnStatus;
 		while (!done) {
-			newArchDescComponentIdentifier = new ArchDescComponentIdentifiers(resourcesModel);
+			newArchDescComponentIdentifier = new ArchDescComponentIdentifiers(model);
 			dialog.setModel(newArchDescComponentIdentifier, null);
 			returnStatus = dialog.showDialog();
 			
 			if (returnStatus == JOptionPane.OK_OPTION) {
-				resourcesModel.addArchDescComponentIdentifier(newArchDescComponentIdentifier);
-				identifierTable.updateCollection(resourcesModel.getArchDescComponentIdentifiers());
+				model.addArchDescComponentIdentifier(newArchDescComponentIdentifier);
+				identifierTable.updateCollection(model.getArchDescComponentIdentifiers());
 				done = true;
 			} else if (returnStatus == StandardEditor.OK_AND_ANOTHER_OPTION) {
-				resourcesModel.addArchDescComponentIdentifier(newArchDescComponentIdentifier);
-				identifierTable.updateCollection(resourcesModel.getArchDescComponentIdentifiers());
+				model.addArchDescComponentIdentifier(newArchDescComponentIdentifier);
+				identifierTable.updateCollection(model.getArchDescComponentIdentifiers());
+			} else {
+				done = true;
+			}
+		}	
+	}
+	
+	protected void addIdentifierActionPerformed(DomainSortableTable identifierTable, ResourcesComponents model) {
+		ArchDescComponentIdentifiers newArchDescComponentIdentifier;
+		DomainEditor dialog = new DomainEditor(ArchDescComponentIdentifiers.class, editorField.getParentEditor(), "Add Identifier", new ArchDescComponentIdentifiersFields());
+		dialog.setNavigationButtonListeners((ActionListener)editorField.getParentEditor());
+		dialog.setNewRecord(true);
+				
+		boolean done = false;
+		int returnStatus;
+		while (!done) {
+			newArchDescComponentIdentifier = new ArchDescComponentIdentifiers(model);
+			dialog.setModel(newArchDescComponentIdentifier, null);
+			returnStatus = dialog.showDialog();
+			
+			if (returnStatus == JOptionPane.OK_OPTION) {
+				model.addArchDescComponentIdentifier(newArchDescComponentIdentifier);
+				identifierTable.updateCollection(model.getArchDescComponentIdentifiers());
+				done = true;
+			} else if (returnStatus == StandardEditor.OK_AND_ANOTHER_OPTION) {
+				model.addArchDescComponentIdentifier(newArchDescComponentIdentifier);
+				identifierTable.updateCollection(model.getArchDescComponentIdentifiers());
 			} else {
 				done = true;
 			}
 		}
 		
 	}
-
-	
 	
 	public void removeRelatedTableRow(DomainGlazedListTable relatedTable, DomainObject model) throws ObjectNotRemovedException {
 		int selectedRow = relatedTable.getSelectedRow();
@@ -177,6 +201,40 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
 
 		return true;
 	}
-
+	
+	protected void setOtherLevelEnabledDisabled(JComboBox levelComboBox, JLabel otherLevelLable, JTextField otherLevelTextField) {
+		if (levelComboBox.getSelectedItem() != null) {
+			String level = ((LookupListItems) levelComboBox.getSelectedItem()).getListItem();
+			if (level.equalsIgnoreCase(Resources.LEVEL_VALUE_OTHERLEVEL)) {
+				otherLevelLable.setEnabled(true);
+				otherLevelTextField.setEnabled(true);
+			} else {
+				otherLevelLable.setEnabled(false);
+				otherLevelTextField.setEnabled(false);
+				otherLevelTextField.setText("");
+			}
+		} else {
+			otherLevelLable.setEnabled(false);
+			otherLevelTextField.setEnabled(false);
+			otherLevelTextField.setText("");
+		}
+	}
+	
+	protected void addDatesToNewDigitalInstance(ArchDescriptionDigitalInstances digitalInstance, ResourcesCommon resorceCommon) {
+		ArchDescriptionDates newDate;
+		for (ArchDescriptionDates date: resorceCommon.getArchDescriptionDates()) {
+			newDate = new ArchDescriptionDates(digitalInstance.getDigitalObject());
+			newDate.setIsoBulkDateBegin(date.getIsoBulkDateBegin());
+			newDate.setIsoBulkDateEnd(date.getIsoBulkDateBegin());
+			newDate.setIsoDateBegin(date.getIsoDateBegin());
+			newDate.setIsoDateEnd(date.getIsoDateEnd());
+			newDate.setDateExpression(date.getDateExpression());
+			newDate.setDateType(date.getDateType());
+			newDate.setCalendar(date.getCalendar());
+			newDate.setEra(date.getEra());
+			newDate.setCertainty(date.getCertainty());
+			digitalInstance.getDigitalObject().addArchdescriptionDate(newDate);
+		}
+	}
 
 }

@@ -15,7 +15,7 @@ public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 	}
 
 	public Component getInitialFocusComponent() {
-		return identifierType;
+		return identifierTypeList;
 	}
 
 	private void initComponents() {
@@ -25,8 +25,8 @@ public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 		label3 = new JLabel();
 		label1 = new JLabel();
 		label2 = new JLabel();
-		identifierType = ATBasicComponentFactory.createTextField(detailsModel.getModel(ArchDescComponentIdentifiers.PROPERTYNAME_IDENTIFIER_TYPE), true);
-		identifierLabel = ATBasicComponentFactory.createTextField(detailsModel.getModel(ArchDescComponentIdentifiers.PROPERTYNAME_IDENTIFIER_LABEL), true);
+		identifierTypeList = ATBasicComponentFactory.createComboBox(detailsModel, ArchDescComponentIdentifiers.PROPERTYNAME_IDENTIFIER_TYPE, ArchDescComponentIdentifiers.class);
+		identifierLabelList = ATBasicComponentFactory.createComboBox(detailsModel, ArchDescComponentIdentifiers.PROPERTYNAME_IDENTIFIER_LABEL, ArchDescComponentIdentifiers.class);
 		identifierValue = ATBasicComponentFactory.createTextField(detailsModel.getModel(ArchDescComponentIdentifiers.PROPERTYNAME_COMPONENT_IDENTIFIER), true);
 		CellConstraints cc = new CellConstraints();
 
@@ -60,11 +60,15 @@ public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 			label2.setText("Identifier Value");
 			mainPanel.add(label2, cc.xy(5, 3));
 
-			//---- identifierType ----
-			identifierType.setColumns(4);
-			identifierType.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-			mainPanel.add(identifierType, cc.xywh(1, 5, 1, 1, CellConstraints.FILL, CellConstraints.DEFAULT));
-			mainPanel.add(identifierLabel, cc.xy(3, 5));
+			//---- identifierTypeList ----
+			identifierTypeList.setOpaque(false);
+			identifierTypeList.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+			mainPanel.add(identifierTypeList, new CellConstraints(1, 5, 1, 1, CellConstraints.LEFT, CellConstraints.DEFAULT, new Insets( 0, 5, 5, 5)));
+
+			//---- identifierLabelList ----
+			identifierLabelList.setOpaque(false);
+			identifierLabelList.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+			mainPanel.add(identifierLabelList, new CellConstraints(3, 5, 1, 1, CellConstraints.LEFT, CellConstraints.DEFAULT, new Insets( 0, 5, 5, 5)));
 			mainPanel.add(identifierValue, cc.xy(5, 5));
 		}
 		add(mainPanel, cc.xy(1, 1));
@@ -77,8 +81,8 @@ public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 	private JLabel label3;
 	private JLabel label1;
 	private JLabel label2;
-	public JTextField identifierType;
-	private JTextField identifierLabel;
+	public JComboBox identifierTypeList;
+	public JComboBox identifierLabelList;
 	private JTextField identifierValue;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }
