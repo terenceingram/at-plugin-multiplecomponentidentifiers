@@ -92,8 +92,7 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
             if (response == JOptionPane.OK_OPTION) {
                 ArrayList<DomainObject> relatedObjects = relatedTable.removeSelectedRows();
                 for (DomainObject relatedObject: relatedObjects) {
-					removeRelatedObject(model, relatedObject);
-                    //model.removeRelatedObject(relatedObject);
+                    model.removeRelatedObject(relatedObject);
                 }
                 int rowCount = relatedTable.getRowCount();
                 if (rowCount == 0) {
@@ -107,20 +106,6 @@ public abstract class NLADomainEditorFields extends DomainEditorFields {
 				ApplicationFrame.getInstance().setRecordDirty();
             }
         }
-	}
-
-	private void removeRelatedObject(DomainObject model, DomainObject objectToRemove) throws ObjectNotRemovedException {
-
-			//this must be done because date and physical descriptions are not handled in the
-			//remove related object method in accessions
-			// todo add this to the removeRelatedObject method in ArchDescription class
-			if (objectToRemove instanceof ArchDescriptionDates) {
-				if (objectToRemove == null)
-					throw new IllegalArgumentException("Can't remove a date.");
-				((ArchDescription)model).getArchDescriptionDates().remove(objectToRemove);
-			} else {
-				model.removeRelatedObject(objectToRemove);
-			}
 	}
 
 	protected int editRelatedRecord(DomainGlazedListTable table, Class clazz, Boolean buffered, DomainEditor domainEditor) {

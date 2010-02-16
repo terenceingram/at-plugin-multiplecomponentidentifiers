@@ -4,5 +4,6 @@
 class="au.gov.nla.atplugin.multiplecomponentidentifiers.PluginImpl">
 	<runtime> 
 		<library id="mulitpleComponentIdentifiers" path="/" type="code"/>
+		<library id="persistentIdentifierPatterns" path="/resources" type="resources"/>
   	</runtime>
 </plugin>

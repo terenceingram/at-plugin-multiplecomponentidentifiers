@@ -78,7 +78,10 @@ public class ResourceComponentBasicInfoPanel extends NLADomainEditorFields {
 
 	public void findLocationForInstance(ArchDescriptionInstances newInstance) {
 		if (newInstance instanceof ArchDescriptionAnalogInstances) {
-			final Resources parentResource = (Resources) editorField.getModel();
+			
+			ResourcesComponents components = (ResourcesComponents)editorField.getModel();
+			//final Resources parentResource = (Resources) editorField.getModel();
+			final Resources parentResource = components.getResource();
 			final ArchDescriptionAnalogInstances analogInstance = (ArchDescriptionAnalogInstances) newInstance;
 			Thread performer = new Thread(new Runnable() {
 				public void run() {
@@ -96,7 +99,6 @@ public class ResourceComponentBasicInfoPanel extends NLADomainEditorFields {
 	}
 
 	private void addInstanceButtonActionPerformed() {
-//		ArchDescription archDescriptionModel = (ArchDescription) super.getModel();
 		ArchDescriptionInstances newInstance = null;
 		Vector<String> possibilities = LookupListUtils.getLookupListValues(LookupListUtils.LIST_NAME_INSTANCE_TYPES);
 		ImageIcon icon = null;
@@ -104,8 +106,7 @@ public class ResourceComponentBasicInfoPanel extends NLADomainEditorFields {
 			// add a special entry for digital object link to the possibilities vector
             possibilities.add(ArchDescriptionInstances.DIGITAL_OBJECT_INSTANCE_LINK);
             Collections.sort(possibilities);
-
-            dialogInstances = (ArchDescriptionInstancesEditor) DomainEditorFactory.getInstance().createDomainEditorWithParent(ArchDescriptionInstances.class, getParentEditor(), getInstancesTable());
+            dialogInstances = (ArchDescriptionInstancesEditor) DomainEditorFactory.getInstance().createDomainEditorWithParent(ArchDescriptionInstances.class, editorField.getParentEditor(), getInstancesTable());
 		} catch (DomainEditorCreationException e) {
 			new ErrorDialog(getParentEditor(), "Error creating editor for ArchDescriptionInstances", e).showDialog();
 		}
@@ -122,7 +123,7 @@ public class ResourceComponentBasicInfoPanel extends NLADomainEditorFields {
 				if (defaultInstanceType.equalsIgnoreCase(ArchDescriptionInstances.DIGITAL_OBJECT_INSTANCE)) {
 					System.out.println("adding new digital instance");
 					newInstance = new ArchDescriptionDigitalInstances(resourceComponentModel);
-					//addDatesToNewDigitalInstance((ArchDescriptionDigitalInstances)newInstance, resourceComponentModel); tingram
+					addDatesToNewDigitalInstance((ArchDescriptionDigitalInstances)newInstance, resourceComponentModel);
 				} else if (defaultInstanceType.equalsIgnoreCase(ArchDescriptionInstances.DIGITAL_OBJECT_INSTANCE_LINK)) {
                     // add a digital object link or links instead
                     addDigitalInstanceLink((Resources) editorField.getModel());

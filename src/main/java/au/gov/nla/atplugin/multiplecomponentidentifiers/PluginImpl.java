@@ -4,6 +4,7 @@ import org.java.plugin.Plugin;
 import org.archiviststoolkit.plugin.ATPlugin;
 import org.archiviststoolkit.ApplicationFrame;
 import org.archiviststoolkit.model.*;
+import org.archiviststoolkit.model.validators.ValidatorFactory;
 import org.archiviststoolkit.editor.ArchDescriptionFields;
 import org.archiviststoolkit.editor.ResourceComponentsFields;
 import org.archiviststoolkit.editor.ResourceFields;
@@ -17,6 +18,9 @@ import java.util.HashMap;
 
 import au.gov.nla.atplugin.multiplecomponentidentifiers.panel.ResourceBasicInfoPanel;
 import au.gov.nla.atplugin.multiplecomponentidentifiers.panel.ResourceComponentBasicInfoPanel;
+import au.gov.nla.atplugin.multiplecomponentidentifiers.validator.ArchDescComponentIdentifierValidator;
+import au.gov.nla.atplugin.multiplecomponentidentifiers.validator.NLA_ResourcesComponentsValidator;
+import au.gov.nla.atplugin.multiplecomponentidentifiers.validator.NLA_ResourcesValidator;
 
 /**
 * Embedded Plugin.
@@ -41,7 +45,8 @@ public class PluginImpl extends Plugin implements ATPlugin {
 	private JTable callingTable;
 	private int selectedRow;
 	    
-    public PluginImpl() { }
+    public PluginImpl() {
+    }
     
     /**
      * Returns the name of the plugin.
@@ -123,17 +128,12 @@ public class PluginImpl extends Plugin implements ATPlugin {
 	* - org.archiviststoolkit.model.ResourcesComponents
 	*/
 	public void setModel(DomainObject domainObject, InfiniteProgressPanel monitor) {
-		
-		System.out.println("setModel within PluginImpl: " + Integer.toHexString(System.identityHashCode(domainObject)));
-		
 		if (domainObject instanceof Resources) {
 			resourcesModel = (Resources)domainObject;
 			resourceBasicInfoPanel.setModel(resourcesModel);
-			System.out.println("Resource: " + Integer.toHexString(System.identityHashCode(resourcesModel)));
 		} else if (domainObject instanceof ResourcesComponents) {
 			resourcesComponentsModel = (ResourcesComponents)domainObject;
 			resourceComponentBasicInfoPanel.setModel(resourcesComponentsModel);
-			System.out.println("Component: " + resourcesComponentsModel);
 		}
 	}
 	 
@@ -173,8 +173,16 @@ public class PluginImpl extends Plugin implements ATPlugin {
         return null;
     }
  
-    // code that is executed when plugin starts. not used here
-    protected void doStart() { }
+    /**
+     * Code that is called when the plugin starts.
+     * This code loads all the validators.
+     */
+    protected void doStart() { 
+    	ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
+		validatorFactory.addValidator(ArchDescComponentIdentifiers.class, new ArchDescComponentIdentifierValidator());
+		//validatorFactory.addValidator(Resources.class, new NLA_ResourcesValidator());
+		//validatorFactory.addValidator(ResourcesComponents.class, new NLA_ResourcesComponentsValidator());
+    }
  
     // code that is executed after plugin stops. not used here
     protected void doStop() { }

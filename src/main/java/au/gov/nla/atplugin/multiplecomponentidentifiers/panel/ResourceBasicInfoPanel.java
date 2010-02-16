@@ -130,7 +130,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 	}
 
 	private void addInstanceButtonActionPerformed() {
-//		ArchDescription archDescriptionModel = (ArchDescription) super.getModel();
+
 		ArchDescriptionInstances newInstance = null;
 		Vector<String> possibilities = LookupListUtils.getLookupListValues(LookupListUtils.LIST_NAME_INSTANCE_TYPES);
 		ImageIcon icon = null;
@@ -138,7 +138,6 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 			// add a special entry for digital object link to the possibilities vector
             possibilities.add(ArchDescriptionInstances.DIGITAL_OBJECT_INSTANCE_LINK);
             Collections.sort(possibilities);
-            //dialogInstances = (ArchDescriptionInstancesEditor) DomainEditorFactory.getInstance().createDomainEditorWithParent(ArchDescriptionInstances.class, getParentEditor(), getInstancesTable());
             dialogInstances = (ArchDescriptionInstancesEditor) DomainEditorFactory.getInstance().createDomainEditorWithParent(ArchDescriptionInstances.class, editorField.getParentEditor(), getInstancesTable());
 		} catch (DomainEditorCreationException e) {
 			new ErrorDialog(getParentEditor(), "Error creating editor for ArchDescriptionInstances", e).showDialog();
@@ -263,10 +262,11 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
-		panel16 = new JPanel();
+		panel2 = new JPanel();
 		label_resourcesTitle = new JLabel();
 		scrollPane2 = new JScrollPane();
 		resourcesTitle = ATBasicComponentFactory.createTextArea(detailsModel.getModel(ArchDescription.PROPERTYNAME_TITLE),false);
+		tagApplicatorPanel = new JPanel();
 		insertInlineTag = ATBasicComponentFactory.createUnboundComboBox(InLineTagsUtils.getInLineTagList(InLineTagsUtils.TITLE));
 		panel38 = new JPanel();
 		panel35 = new JPanel();
@@ -282,7 +282,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 		resourcesBulkDateBegin = ATBasicComponentFactory.createIntegerField(detailsModel,Resources.PROPERTYNAME_BULK_DATE_BEGIN);
 		label_resourcesBulkDateEnd = new JLabel();
 		resourcesBulkDateEnd = ATBasicComponentFactory.createIntegerField(detailsModel,Resources.PROPERTYNAME_BULK_DATE_END);
-		panel1 = new JPanel();
+		panel3 = new JPanel();
 		label_resourcesLanguageCode = new JLabel();
 		resourcesLanguageCode = ATBasicComponentFactory.createComboBox(detailsModel, Resources.PROPERTYNAME_LANGUAGE_CODE, Resources.class);
 		panel37 = new JPanel();
@@ -337,48 +337,26 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 		setBackground(new Color(200, 205, 232));
 		setLayout(new FormLayout(
 			new ColumnSpec[] {
-				new ColumnSpec("max(min;300px)"),
+				new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
+				new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC
+				new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
 			},
 			RowSpec.decodeSpecs("default")));
 
-		//======== panel16 ========
+		//======== panel2 ========
 		{
-			panel16.setOpaque(false);
-			panel16.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-			panel16.setBorder(Borders.DLU2_BORDER);
-			panel16.setLayout(new FormLayout(
-				ColumnSpec.decodeSpecs("default:grow, default"),
-				new RowSpec[] {
-					new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					new RowSpec(RowSpec.TOP, Sizes.DEFAULT, FormSpec.NO_GROW),
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC
-				}));
+			panel2.setBackground(new Color(200, 205, 232));
+			panel2.setLayout(new FormLayout(
+				"default:grow",
+				"fill:default:grow, fill:default:grow, fill:default:grow, fill:default:grow, fill:default:grow, fill:default:grow, fill:default:grow, fill:default:grow, fill:default:grow"));
 
 			//---- label_resourcesTitle ----
 			label_resourcesTitle.setText("Title");
 			label_resourcesTitle.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 			ATFieldInfo.assignLabelInfo(label_resourcesTitle, Resources.class, Resources.PROPERTYNAME_TITLE);
-			panel16.add(label_resourcesTitle, cc.xy(1, 1));
+			panel2.add(label_resourcesTitle, cc.xy(1, 1));
 
 			//======== scrollPane2 ========
 			{
@@ -390,17 +368,32 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				resourcesTitle.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				scrollPane2.setViewportView(resourcesTitle);
 			}
-			panel16.add(scrollPane2, cc.xywh(1, 3, 2, 1));
+			panel2.add(scrollPane2, cc.xy(1, 2));
 
-			//---- insertInlineTag ----
-			insertInlineTag.setOpaque(false);
-			insertInlineTag.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-			insertInlineTag.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					insertInlineTagActionPerformed();
-				}
-			});
-			panel16.add(insertInlineTag, cc.xy(1, 5));
+			//======== tagApplicatorPanel ========
+			{
+				tagApplicatorPanel.setOpaque(false);
+				tagApplicatorPanel.setLayout(new FormLayout(
+					new ColumnSpec[] {
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC
+					},
+					RowSpec.decodeSpecs("default")));
+
+				//---- insertInlineTag ----
+				insertInlineTag.setOpaque(false);
+				insertInlineTag.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+				insertInlineTag.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						insertInlineTagActionPerformed();
+					}
+				});
+				tagApplicatorPanel.add(insertInlineTag, cc.xy(1, 1));
+			}
+			panel2.add(tagApplicatorPanel, cc.xy(1, 3));
 
 			//======== panel38 ========
 			{
@@ -503,34 +496,32 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				}
 				panel38.add(panel35, cc.xy(1, 1));
 			}
-			panel16.add(panel38, cc.xywh(1, 7, 2, 1, CellConstraints.DEFAULT, CellConstraints.FILL));
+			panel2.add(panel38, cc.xy(1, 4));
 
-			//======== panel1 ========
+			//======== panel3 ========
 			{
-				panel1.setOpaque(false);
-				panel1.setLayout(new FormLayout(
+				panel3.setBackground(new Color(200, 205, 232));
+				panel3.setLayout(new FormLayout(
 					new ColumnSpec[] {
-						new ColumnSpec(ColumnSpec.LEFT, Sizes.DEFAULT, FormSpec.NO_GROW),
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec("left:min(default;200px)")
+						new ColumnSpec("200px")
 					},
-					RowSpec.decodeSpecs("default")));
+					RowSpec.decodeSpecs("fill:default:grow")));
 
 				//---- label_resourcesLanguageCode ----
 				label_resourcesLanguageCode.setText("Language");
 				label_resourcesLanguageCode.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				ATFieldInfo.assignLabelInfo(label_resourcesLanguageCode, Resources.class, Resources.PROPERTYNAME_LANGUAGE_CODE);
-				panel1.add(label_resourcesLanguageCode, cc.xy(1, 1));
+				panel3.add(label_resourcesLanguageCode, cc.xy(1, 1));
 
 				//---- resourcesLanguageCode ----
 				resourcesLanguageCode.setMaximumSize(new Dimension(50, 27));
 				resourcesLanguageCode.setOpaque(false);
 				resourcesLanguageCode.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-				panel1.add(resourcesLanguageCode, cc.xywh(3, 1, 1, 1, CellConstraints.LEFT, CellConstraints.DEFAULT));
+				panel3.add(resourcesLanguageCode, cc.xywh(2, 1, 2, 1));
 			}
-			panel16.add(panel1, cc.xy(1, 9));
+			panel2.add(panel3, cc.xy(1, 5));
 
 			//======== panel37 ========
 			{
@@ -620,13 +611,13 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				}
 				panel37.add(panel20, cc.xywh(1, 1, 1, 1, CellConstraints.DEFAULT, CellConstraints.FILL));
 			}
-			panel16.add(panel37, cc.xywh(1, 11, 2, 1, CellConstraints.DEFAULT, CellConstraints.FILL));
+			panel2.add(panel37, cc.xy(1, 6));
 
 			//---- label_resourcesLanguageNote ----
 			label_resourcesLanguageNote.setText("Repository Processing Note");
 			label_resourcesLanguageNote.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 			ATFieldInfo.assignLabelInfo(label_resourcesLanguageNote, Resources.class, Resources.PROPERTYNAME_REPOSITORY_PROCESSING_NOTE);
-			panel16.add(label_resourcesLanguageNote, cc.xy(1, 13));
+			panel2.add(label_resourcesLanguageNote, cc.xy(1, 7));
 
 			//======== scrollPane423 ========
 			{
@@ -641,7 +632,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				resourcesLanguageNote.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				scrollPane423.setViewportView(resourcesLanguageNote);
 			}
-			panel16.add(scrollPane423, cc.xywh(1, 15, 2, 1));
+			panel2.add(scrollPane423, cc.xy(1, 8));
 
 			//======== panel6 ========
 			{
@@ -681,14 +672,14 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				});
 				panel6.add(changeRepositoryButton, cc.xywh(5, 1, 1, 1, CellConstraints.CENTER, CellConstraints.DEFAULT));
 			}
-			panel16.add(panel6, cc.xy(1, 17));
+			panel2.add(panel6, cc.xy(1, 9));
 		}
-		add(panel16, cc.xywh(1, 1, 1, 1, CellConstraints.FILL, CellConstraints.DEFAULT));
+		add(panel2, cc.xy(1, 1));
 
 		//---- separator2 ----
 		separator2.setForeground(new Color(147, 131, 86));
 		separator2.setOrientation(SwingConstants.VERTICAL);
-		add(separator2, cc.xywh(3, 1, 1, 1, CellConstraints.FILL, CellConstraints.FILL));
+		add(separator2, cc.xy(3, 1));
 
 		//======== panel13 ========
 		{
@@ -696,7 +687,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 			panel13.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 			panel13.setBorder(Borders.DLU2_BORDER);
 			panel13.setLayout(new FormLayout(
-				ColumnSpec.decodeSpecs("default:grow, 3dlu"),
+				ColumnSpec.decodeSpecs("default:grow"),
 				new RowSpec[] {
 					new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
@@ -967,10 +958,11 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	// Generated using JFormDesigner non-commercial license
-	private JPanel panel16;
+	private JPanel panel2;
 	private JLabel label_resourcesTitle;
 	private JScrollPane scrollPane2;
 	public JTextArea resourcesTitle;
+	private JPanel tagApplicatorPanel;
 	public JComboBox insertInlineTag;
 	private JPanel panel38;
 	private JPanel panel35;
@@ -986,7 +978,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 	public JFormattedTextField resourcesBulkDateBegin;
 	private JLabel label_resourcesBulkDateEnd;
 	public JFormattedTextField resourcesBulkDateEnd;
-	private JPanel panel1;
+	private JPanel panel3;
 	private JLabel label_resourcesLanguageCode;
 	public JComboBox resourcesLanguageCode;
 	private JPanel panel37;

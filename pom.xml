@@ -71,6 +71,13 @@
 		<scope>system</scope>
       <systemPath>${basedir}/lib/hibernate3.jar</systemPath>
 	</dependency>
+	<dependency>
+		<groupId>jgoodies</groupId>
+		<artifactId>validation</artifactId>
+		<version>Unknown</version>
+		<scope>system</scope>
+      <systemPath>${basedir}/lib/validation.jar</systemPath>
+	</dependency>
   </dependencies>
   
 </project>
