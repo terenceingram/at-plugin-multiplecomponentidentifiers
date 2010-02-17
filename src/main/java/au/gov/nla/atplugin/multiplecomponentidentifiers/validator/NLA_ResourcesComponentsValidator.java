@@ -2,7 +2,6 @@ package au.gov.nla.atplugin.multiplecomponentidentifiers.validator;
 
 import org.archiviststoolkit.model.ResourcesComponents;
 import org.archiviststoolkit.model.validators.ResourcesComponentsValidator;
-import org.archiviststoolkit.util.ATPropertyValidationSupport;
 
 import com.jgoodies.validation.ValidationResult;
 
@@ -17,21 +16,16 @@ import com.jgoodies.validation.ValidationResult;
  */
 public class NLA_ResourcesComponentsValidator extends ResourcesComponentsValidator {
 	
-private ATPropertyValidationSupport support;
-	
 	public ValidationResult validate() {
 		
-		ResourcesComponents model = (ResourcesComponents)objectToValidate;
-		support = new ATPropertyValidationSupport(model, "Resource Component");
+		// Validation Rules from AT
 		ValidationResult result = super.validate();
 		
-		
 		// Specifically for ArchDescComponentIdentifiers
-		
-		
-		result.addAllFrom(support.getResult());
+		ResourcesComponents model = (ResourcesComponents)objectToValidate;
+		ArchDescComponentIdentifierValidator validator = new ArchDescComponentIdentifierValidator(model.getArchDescComponentIdentifiers());
+		result.addAllFrom(validator.validatePerComponent());
 		
 		return result;
 	}
-
 }

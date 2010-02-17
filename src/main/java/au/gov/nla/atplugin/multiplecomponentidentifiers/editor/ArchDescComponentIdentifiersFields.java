@@ -12,6 +12,8 @@ public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 	
 	public ArchDescComponentIdentifiersFields() {
 		initComponents();
+		identifierTypeList.setSelectedIndex(1);
+		identifierTypeList.setSelectedIndex(1);
 	}
 
 	public Component getInitialFocusComponent() {

@@ -33,7 +33,6 @@ import au.gov.nla.atplugin.multiplecomponentidentifiers.validator.NLA_ResourcesV
  
 public class PluginImpl extends Plugin implements ATPlugin {
 	
-	
 	protected Resources resourcesModel;
 	protected ResourcesComponents resourcesComponentsModel;
 	
@@ -92,7 +91,6 @@ public class PluginImpl extends Plugin implements ATPlugin {
      */
 	public HashMap getEmbeddedPanels() {
 		HashMap<String, JPanel> panels = new HashMap<String,JPanel>();
-		//System.out.println(editorField);
 		if(editorField != null) {
 			if (editorField instanceof ResourceFields) {				
 				if (resourceBasicInfoPanel == null) {
@@ -180,8 +178,8 @@ public class PluginImpl extends Plugin implements ATPlugin {
     protected void doStart() { 
     	ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
 		validatorFactory.addValidator(ArchDescComponentIdentifiers.class, new ArchDescComponentIdentifierValidator());
-		//validatorFactory.addValidator(Resources.class, new NLA_ResourcesValidator());
-		//validatorFactory.addValidator(ResourcesComponents.class, new NLA_ResourcesComponentsValidator());
+		validatorFactory.addValidator(Resources.class, new NLA_ResourcesValidator());
+		validatorFactory.addValidator(ResourcesComponents.class, new NLA_ResourcesComponentsValidator());
     }
  
     // code that is executed after plugin stops. not used here
