@@ -1,8 +1,6 @@
 package au.gov.nla.atplugin.multiplecomponentidentifiers.validator;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,21 +21,11 @@ import au.gov.nla.atplugin.multiplecomponentidentifiers.PluginImpl;
  */
 public class PersistentIdentifier {
 	
-	private File patternFile;
 	private List<PiStruct> piStructList = null;
-	private final String CONFIG_FILE = "/resources/persistentIdentifierPatterns.txt";
+	protected String CONFIG_FILE = "/resources/persistentIdentifierPatterns.txt";
 	
 	public PersistentIdentifier() {
-		
-		try {
-			ClassLoader classLoader = PluginImpl.class.getClassLoader();
-			URL resource = classLoader.getResource(CONFIG_FILE);
-			InputStream inputStream = resource.openStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-			loadPatterns(br);
-		} catch (Exception e) {
-		      System.err.println("Unable to load config file: " + CONFIG_FILE + " " + e);
-		}
+		loadConfigFile();
 	}
 	
 	/**
@@ -47,11 +35,22 @@ public class PersistentIdentifier {
 	 * @return boolean
 	 */
 	public boolean validate(String persistentIdentifier) {
-	    PiStruct piStruct = null;
 	    for (PiStruct ps : piStructList) {
 	      if (ps.pattern.matcher(persistentIdentifier).matches()) return true;
 	    }
 	    return false;
+	}
+	
+	protected void loadConfigFile() {
+		try {
+			ClassLoader classLoader = PluginImpl.class.getClassLoader();
+			URL resource = classLoader.getResource(CONFIG_FILE);
+			InputStream inputStream = resource.openStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+			loadPatterns(br);
+		} catch (Exception e) {
+		      System.err.println("Unable to load config file: " + CONFIG_FILE + " " + e);
+		}
 	}
 	
 	private void loadPatterns(BufferedReader br) throws IOException, Exception {

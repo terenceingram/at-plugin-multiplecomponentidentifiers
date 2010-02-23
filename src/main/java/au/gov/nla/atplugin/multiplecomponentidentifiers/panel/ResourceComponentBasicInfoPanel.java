@@ -26,6 +26,12 @@ import org.archiviststoolkit.exceptions.DomainEditorCreationException;
 import org.archiviststoolkit.ApplicationFrame;
 import org.archiviststoolkit.editor.ArchDescriptionInstancesEditor;
 
+/**
+ * Panel used on the ResourcesComponents.
+ * 
+ * @author tingram
+ *
+ */
 public class ResourceComponentBasicInfoPanel extends NLADomainEditorFields {
 
 	private ResourcesComponents resourceComponentModel;

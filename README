@@ -1,0 +1,16 @@
+Multiple Component Identifiers
+--------------------------------
+
+This is a plugin for Archivists' Toolkit that makes use of the
+table ArchDescComponentIdentifiers.
+
+Build
+-----
+This plugin is built using maven assembly plugin that packages
+and builds the required ZIP file.
+
+mvn clean assembly:assembly
+
+Usage
+-----
+Copy the zip file into the plugins folder for the AT install.

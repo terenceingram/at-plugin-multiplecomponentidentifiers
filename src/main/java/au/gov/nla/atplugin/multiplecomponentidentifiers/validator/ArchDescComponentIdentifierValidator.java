@@ -1,14 +1,14 @@
 package au.gov.nla.atplugin.multiplecomponentidentifiers.validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.archiviststoolkit.model.ArchDescComponentIdentifiers;
 import org.archiviststoolkit.model.validators.ATAbstractValidator;
 import org.archiviststoolkit.util.ATPropertyValidationSupport;
 
-import com.jgoodies.validation.Severity;
 import com.jgoodies.validation.ValidationResult;
-import com.jgoodies.validation.message.SimpleValidationMessage;
 import com.jgoodies.validation.util.ValidationUtils;
 
 /**
@@ -19,9 +19,10 @@ import com.jgoodies.validation.util.ValidationUtils;
  */
 public class ArchDescComponentIdentifierValidator extends ATAbstractValidator {
 	
-	private ArchDescComponentIdentifiers model;
-	private ATPropertyValidationSupport support;
-	Set<ArchDescComponentIdentifiers> identifiers;
+	protected ArchDescComponentIdentifiers model;
+	protected ATPropertyValidationSupport support;
+	protected Set<ArchDescComponentIdentifiers> identifiers;
+	protected PersistentIdentifier persistentIdentifier;
 	
 	public ArchDescComponentIdentifierValidator() {
 	}
@@ -43,6 +44,7 @@ public class ArchDescComponentIdentifierValidator extends ATAbstractValidator {
 		
 		model = (ArchDescComponentIdentifiers)objectToValidate;
 		support = new ATPropertyValidationSupport(model, "Mulitple Component Identifiers");
+		persistentIdentifier = new PersistentIdentifier();
 		
 		//Rule 1
 		componentIdentifierIsMandatory();
@@ -80,34 +82,91 @@ public class ArchDescComponentIdentifierValidator extends ATAbstractValidator {
 		//Rule 6
 		checkOnlyOneChildrange();
 		
-		//Rule 8
-		checkEqualNumberOfStartAndEndChild();
-		
-		//Rule 9
+		//Rule 8, 9 &10
+		checkStartAndEndChildPairs();
 		
 		return support.getResult();
 	}
 	
 	/**
-	 * Component level validation. If present, each start child must have a
-	 * corresponding end child.
+	 * Component level validation. Performs three validations:
+	 * 1) Check for equal number of start / endchild identifiers
+	 * 2) Check that the start and end children have matching pi prefixes
+	 * 3) Check that startchild number must be less or equal to the endchild number.
 	 */
-	private void checkEqualNumberOfStartAndEndChild() {
-		int startchildCount = 0;
-		int endchildCount = 0;
+	protected void checkStartAndEndChildPairs() {
+		
+		List<String> startChildList = new ArrayList<String>();
+		List<String> endChildList = new ArrayList<String>();
+		
 		for (ArchDescComponentIdentifiers identifier : identifiers) {
 			if (!ValidationUtils.isBlank(identifier.getIdentifierType()) && 
-					identifier.getIdentifierType().equals("startchild")) startchildCount++;
+					identifier.getIdentifierType().equals("startchild")) startChildList.add(identifier.getComponentIdentifier());
 			if (!ValidationUtils.isBlank(identifier.getIdentifierType()) && 
-					identifier.getIdentifierType().equals("endchild")) endchildCount++;
+					identifier.getIdentifierType().equals("endchild")) endChildList.add(identifier.getComponentIdentifier());
 		}
-		if (startchildCount != endchildCount) support.addSimpleError("Number of start child and end child identifiers does not match.");
+		
+		if (startChildList.size() != endChildList.size()) {
+			//Rule 8
+			support.addSimpleError("Number of start child and end child identifiers does not match.");
+		} else {
+			// Start and End Child are in pairs match each pair to validate
+			for (int index=0; index < startChildList.size(); index++) {
+				String startChild = startChildList.get(index);
+				String endChild = endChildList.get(index);
+				
+				if (!getPiPrefix(startChild).equals(getPiPrefix(endChild))) {
+					//Rule 9
+					support.addSimpleError("Start child " + startChild + " and end child " + endChild + " identifier patterns do not match.");
+				} else if (getChildNumberFromPi(startChild) > getChildNumberFromPi(endChild)) {
+					//Rule 10
+					support.addSimpleError("The end child identifier " + endChild + " is not greater than or equal to corresponding start child " + startChild + " identifier.");
+				}
+			}	
+		}
 	}
 	
 	/**
-	 * Component level validation. 
+	 * Extracts the pi prefix from a pi i.e.
+	 * returns nla.ms-ms9915-1.2 from nla.ms-ms9915-1.2-27
+	 * 
+	 * Rule must return the pi before the final separator of either
+	 * "." or "-"
+	 * 
+	 * @param identifier
+	 * @return
 	 */
-	private void checkOnlyOnePersistentIdentifier() {
+	protected String getPiPrefix(String identifier) {
+		if (identifier.lastIndexOf(".") > identifier.lastIndexOf("-")) {
+			return identifier.substring(0, identifier.lastIndexOf("."));
+		} else {
+			return identifier.substring(0, identifier.lastIndexOf("-"));
+		}
+	}
+	
+	/**
+	 * Extracts the child number prefix from a pi i.e.
+	 * returns 27 from nla.ms-ms9915-1.2-27
+	 * 
+	 * Rule must return number after the final separator of either
+	 * "." or "-"
+	 * 
+	 * @param identifier
+	 * @return
+	 */
+	protected int getChildNumberFromPi(String identifier) {
+		if (identifier.lastIndexOf(".") > identifier.lastIndexOf("-")) {
+			return Integer.valueOf(identifier.substring(identifier.lastIndexOf(".") + 1));
+		} else {
+			return Integer.valueOf(identifier.substring(identifier.lastIndexOf("-") + 1));
+		}
+	}
+	
+	/**
+	 * Component level validation. Checks that there is only ONE type of "persistent identifier"
+	 * in the list of identifiers.
+	 */
+	protected void checkOnlyOnePersistentIdentifier() {
 		int count = 0;
 		for (ArchDescComponentIdentifiers identifier : identifiers) {
 			if (!ValidationUtils.isBlank(identifier.getIdentifierType()) && 
@@ -117,9 +176,10 @@ public class ArchDescComponentIdentifierValidator extends ATAbstractValidator {
 	}
 	
 	/**
-	 * Component level validation. 
+	 * Component level validation. Checks that there is only ONE type of "subunit number"
+	 * in the list of identifiers.
 	 */
-	private void checkOnlyOneSubunitNumber() {
+	protected void checkOnlyOneSubunitNumber() {
 		int count = 0;
 		for (ArchDescComponentIdentifiers identifier : identifiers) {
 			if (!ValidationUtils.isBlank(identifier.getIdentifierType()) && 
@@ -129,9 +189,10 @@ public class ArchDescComponentIdentifierValidator extends ATAbstractValidator {
 	}
 	
 	/**
-	 * Component level validation. 
+	 * Component level validation. Checks that there is only ONE type of "childrange"
+	 * in the list of identifiers.
 	 */
-	private void checkOnlyOneChildrange() {
+	protected void checkOnlyOneChildrange() {
 		int count = 0;
 		for (ArchDescComponentIdentifiers identifier : identifiers) {
 			if (!ValidationUtils.isBlank(identifier.getIdentifierType()) && 
@@ -143,7 +204,7 @@ public class ArchDescComponentIdentifierValidator extends ATAbstractValidator {
 	/**
 	 * Identifier validation.
 	 */
-	private void checkForChildrange() {
+	protected void checkForChildrange() {
 		if (ValidationUtils.isBlank(model.getIdentifierType())) {
 			// Do nothing
 		} else if (model.getIdentifierType().equalsIgnoreCase("childrange")) {
@@ -154,7 +215,7 @@ public class ArchDescComponentIdentifierValidator extends ATAbstractValidator {
 	/**
 	 * Identifier validation.
 	 */
-	private void checkForSubunitNumber() {
+	protected void checkForSubunitNumber() {
 		if (ValidationUtils.isBlank(model.getIdentifierType())) {
 			// Do nothing
 		} else if (model.getIdentifierType().equalsIgnoreCase("subunit number")) {
@@ -165,14 +226,14 @@ public class ArchDescComponentIdentifierValidator extends ATAbstractValidator {
 	/**
 	 * Identifier validation.
 	 */
-	private void componentIdentifierIsMandatory() {
+	protected void componentIdentifierIsMandatory() {
 		if (ValidationUtils.isBlank(model.getComponentIdentifier())) support.addSimpleError("Identifier is mandatory.");
 	}
 	
 	/**
 	 * Identifier validation.
 	 */
-	private void validatePersistentIdentifierPattern() {
+	protected void validatePersistentIdentifierPattern() {
 		if (ValidationUtils.isBlank(model.getIdentifierType())) {
 			// Do nothing
 		} else if (model.getIdentifierType().equalsIgnoreCase("persistent identifier") || 
@@ -180,8 +241,7 @@ public class ArchDescComponentIdentifierValidator extends ATAbstractValidator {
 				model.getIdentifierType().equalsIgnoreCase("startchild") || 
 				model.getIdentifierType().equalsIgnoreCase("endchild")) {
 			
-			PersistentIdentifier identifier = new PersistentIdentifier();
-			if (!identifier.validate(model.getComponentIdentifier())) support.addSimpleError("Identifier Value " + model.getComponentIdentifier() + " does not match a valid persistent identifier pattern.");
+			if (!persistentIdentifier.validate(model.getComponentIdentifier())) support.addSimpleError("Identifier Value " + model.getComponentIdentifier() + " does not match a valid persistent identifier pattern.");
 			
 		}
 	}

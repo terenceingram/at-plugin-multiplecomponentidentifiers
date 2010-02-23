@@ -8,12 +8,22 @@ import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.model.ArchDescComponentIdentifiers;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 
+/**
+ * Screen to adding / editing the details of the Multiple Component
+ * Identifiers.
+ * 
+ * @author tingram
+ *
+ */
 public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 	
 	public ArchDescComponentIdentifiersFields() {
 		initComponents();
-		identifierTypeList.setSelectedIndex(1);
-		identifierTypeList.setSelectedIndex(1);
+		// Ensure that the drop downs have a default selection
+		// otherwise if not it causes the entire application to hang
+		// with a thread running in the background.
+		identifierTypeList.setSelectedIndex(0);
+		identifierLabelList.setSelectedIndex(0);
 	}
 
 	public Component getInitialFocusComponent() {

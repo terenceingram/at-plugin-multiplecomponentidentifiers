@@ -26,6 +26,7 @@ import au.gov.nla.atplugin.multiplecomponentidentifiers.validator.NLA_ResourcesV
 * Embedded Plugin.
 * 
 * Plugin to amend the ResourceFields and ResourceComponentFields.
+* It adds the multiple component identifier functionality.
 *
 * @author: tingram
 * Date: Jan 12, 2010
@@ -160,10 +161,6 @@ public class PluginImpl extends Plugin implements ATPlugin {
 	 
     // Method to do a specific task in the plugin
     public void doTask(String task) {
-        //frame = new ATPluginDemo1Frame(this);
-        //frame.textArea1.setText("Doing Task : " + task + "\n\n");
-        //frame.setApplicationFrame(mainFrame);
-        //frame.setVisible(true);
     }
  
     // Method to get the list of specific task the plugin can perform

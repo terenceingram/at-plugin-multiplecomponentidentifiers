@@ -17,6 +17,12 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Common functionality shared between Resources and ResoucesComponets tabs.
+ * 
+ * @author tingram
+ *
+ */
 public abstract class NLADomainEditorFields extends DomainEditorFields {
 	
 	private static final long serialVersionUID = 7048825913960121458L;
