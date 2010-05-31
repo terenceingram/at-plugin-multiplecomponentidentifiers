@@ -56,8 +56,8 @@ public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 			mainPanel.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 			mainPanel.setBackground(new Color(200, 205, 232));
 			mainPanel.setLayout(new FormLayout(
-				"max(min;150px), 5px, max(min;150px), 5px, max(default;150px)",
-				"default, 3px, default, 3px, default, 3px, default, 3px, default"));
+				"max(min;150px), 1px, max(min;150px), 1px, max(default;150px)",
+				"default, default, default, default, default, default"));
 
 			//---- label3 ----
 			label3.setText("Identifier Type");
@@ -75,13 +75,13 @@ public class ArchDescComponentIdentifiersFields extends DomainEditorFields {
 			//---- identifierTypeList ----
 			identifierTypeList.setOpaque(false);
 			identifierTypeList.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-			mainPanel.add(identifierTypeList, new CellConstraints(1, 5, 1, 1, CellConstraints.LEFT, CellConstraints.DEFAULT, new Insets( 0, 5, 5, 5)));
+			mainPanel.add(identifierTypeList, cc.xywh(1, 4, 1, 1, CellConstraints.LEFT, CellConstraints.DEFAULT));
 
 			//---- identifierLabelList ----
 			identifierLabelList.setOpaque(false);
 			identifierLabelList.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-			mainPanel.add(identifierLabelList, new CellConstraints(3, 5, 1, 1, CellConstraints.LEFT, CellConstraints.DEFAULT, new Insets( 0, 5, 5, 5)));
-			mainPanel.add(identifierValue, cc.xy(5, 5));
+			mainPanel.add(identifierLabelList, cc.xywh(3, 4, 1, 1, CellConstraints.LEFT, CellConstraints.DEFAULT));
+			mainPanel.add(identifierValue, cc.xy(5, 4));
 		}
 		add(mainPanel, cc.xy(1, 1));
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents

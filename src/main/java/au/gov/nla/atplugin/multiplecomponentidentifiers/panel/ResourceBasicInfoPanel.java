@@ -347,7 +347,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
+				new ColumnSpec("left:max(default;300px):grow")
 			},
 			RowSpec.decodeSpecs("default")));
 
@@ -697,25 +697,25 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				new RowSpec[] {
 					new RowSpec(RowSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
+					new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
+					new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
+					new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
+					new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
+					new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
+					new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
+					new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
+					new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
+					new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
+					new RowSpec(RowSpec.CENTER, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 					FormFactory.LINE_GAP_ROWSPEC
 				}));
 
@@ -726,7 +726,7 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel12.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel12.setLayout(new FormLayout(
 					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
@@ -769,15 +769,15 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel19.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel19.setLayout(new FormLayout(
 					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 						new ColumnSpec(Sizes.DLUX3),
 						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
 					},
 					RowSpec.decodeSpecs("default")));
 
@@ -840,9 +840,9 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel23.setMinimumSize(new Dimension(100, 29));
 				panel23.setLayout(new FormLayout(
 					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
 					},
 					RowSpec.decodeSpecs("default")));
 
@@ -903,9 +903,9 @@ public class ResourceBasicInfoPanel extends NLADomainEditorFields {
 				panel29.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				panel29.setLayout(new FormLayout(
 					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC
+						new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, FormSpec.DEFAULT_GROW)
 					},
 					RowSpec.decodeSpecs("default")));
 

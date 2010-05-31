@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.5.0_20" class="java.beans.XMLDecoder"> 
+<java version="1.5.0_22" class="java.beans.XMLDecoder"> 
  <object class="com.jformdesigner.model.FormModel"> 
   <void property="contentType"> 
    <string>form/swing</string> 
@@ -13,7 +13,7 @@
        <class>com.jgoodies.forms.layout.FormLayout</class> 
        <void method="setProperty"> 
         <string>$columnSpecs</string> 
-        <string>default:grow, labelcompgap, default:grow, labelcompgap, default:grow</string> 
+        <string>default:grow, labelcompgap, default:grow, labelcompgap, left:max(default;300px):grow</string> 
        </void> 
        <void method="setProperty"> 
         <string>$rowSpecs</string> 
@@ -1573,7 +1573,7 @@
          </void> 
          <void method="setProperty"> 
           <string>$rowSpecs</string> 
-          <string>fill:default:grow, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap</string> 
+          <string>fill:default:grow, linegap, default:grow, linegap, default:grow, linegap, default:grow, linegap, default:grow, linegap, default:grow, linegap, default:grow, linegap, default:grow, linegap, default:grow, linegap, default:grow, linegap, default:grow, linegap</string> 
          </void> 
         </object> 
         <void method="setProperty"> 
@@ -1598,7 +1598,7 @@
            <class>com.jgoodies.forms.layout.FormLayout</class> 
            <void method="setProperty"> 
             <string>$columnSpecs</string> 
-            <string>default, labelcompgap, default:grow, labelcompgap, default:grow, labelcompgap, default:grow, labelcompgap, default:grow</string> 
+            <string>default:grow, labelcompgap, default:grow, labelcompgap, default:grow, labelcompgap, default:grow, labelcompgap, default:grow</string> 
            </void> 
            <void method="setProperty"> 
             <string>$rowSpecs</string> 
@@ -1798,7 +1798,7 @@
            <class>com.jgoodies.forms.layout.FormLayout</class> 
            <void method="setProperty"> 
             <string>$columnSpecs</string> 
-            <string>default, labelcompgap, default, labelcompgap, default, 3dlu, default:grow, labelcompgap, default</string> 
+            <string>default:grow, labelcompgap, default:grow, labelcompgap, default:grow, 3dlu, default:grow, labelcompgap, default:grow</string> 
            </void> 
            <void method="setProperty"> 
             <string>$rowSpecs</string> 
@@ -2082,7 +2082,7 @@
            <class>com.jgoodies.forms.layout.FormLayout</class> 
            <void method="setProperty"> 
             <string>$columnSpecs</string> 
-            <string>default, labelcompgap, default</string> 
+            <string>default:grow, labelcompgap, default:grow</string> 
            </void> 
            <void method="setProperty"> 
             <string>$rowSpecs</string> 
@@ -2312,7 +2312,7 @@
            <class>com.jgoodies.forms.layout.FormLayout</class> 
            <void method="setProperty"> 
             <string>$columnSpecs</string> 
-            <string>default, labelcompgap, default</string> 
+            <string>default:grow, labelcompgap, default:grow</string> 
            </void> 
            <void method="setProperty"> 
             <string>$rowSpecs</string> 

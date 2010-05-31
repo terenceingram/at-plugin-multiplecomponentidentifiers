@@ -276,7 +276,6 @@ public class ResourceComponentBasicInfoPanel extends NLADomainEditorFields {
 		panel3 = new JPanel();
 		label_resourcesLevel = new JLabel();
 		resourcesLevel = ATBasicComponentFactory.createComboBox(detailsModel, ResourcesComponents.PROPERTYNAME_LEVEL, ResourcesComponents.class);
-		panel12 = new JPanel();
 		label3 = new JLabel();
 		resourcesDateBegin2 = ATBasicComponentFactory.createTextField(detailsModel.getModel(ResourcesComponents.PROPERTYNAME_PERSISTENT_ID));
 		label_otherLevel = new JLabel();
@@ -302,11 +301,11 @@ public class ResourceComponentBasicInfoPanel extends NLADomainEditorFields {
 		setBackground(new Color(200, 205, 232));
 		setLayout(new FormLayout(
 			new ColumnSpec[] {
-				FormFactory.DEFAULT_COLSPEC,
+				new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT, 0.5),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC
+				new ColumnSpec("max(default;350px):grow")
 			},
 			RowSpec.decodeSpecs("default")));
 
@@ -682,6 +681,8 @@ public class ResourceComponentBasicInfoPanel extends NLADomainEditorFields {
 					new RowSpec[] {
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC
 					}));
 
@@ -701,40 +702,27 @@ public class ResourceComponentBasicInfoPanel extends NLADomainEditorFields {
 				});
 				panel3.add(resourcesLevel, cc.xywh(3, 1, 1, 1, CellConstraints.LEFT, CellConstraints.DEFAULT));
 
-				//======== panel12 ========
-				{
-					panel12.setOpaque(false);
-					panel12.setLayout(new FormLayout(
-						new ColumnSpec[] {
-							FormFactory.DEFAULT_COLSPEC,
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							FormFactory.DEFAULT_COLSPEC
-						},
-						RowSpec.decodeSpecs("default")));
+				//---- label3 ----
+				label3.setText("Persistent ID");
+				label3.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+				ATFieldInfo.assignLabelInfo(label3, ResourcesComponents.class, ResourcesComponents.PROPERTYNAME_PERSISTENT_ID);
+				panel3.add(label3, cc.xy(1, 3));
 
-					//---- label3 ----
-					label3.setText("Persistent ID");
-					label3.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-					ATFieldInfo.assignLabelInfo(label3, ResourcesComponents.class, ResourcesComponents.PROPERTYNAME_PERSISTENT_ID);
-					panel12.add(label3, cc.xy(1, 1));
-
-					//---- resourcesDateBegin2 ----
-					resourcesDateBegin2.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-					resourcesDateBegin2.setEditable(false);
-					resourcesDateBegin2.setOpaque(false);
-					panel12.add(resourcesDateBegin2, cc.xy(3, 1));
-				}
-				panel3.add(panel12, cc.xy(5, 1));
+				//---- resourcesDateBegin2 ----
+				resourcesDateBegin2.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+				resourcesDateBegin2.setEditable(false);
+				resourcesDateBegin2.setOpaque(false);
+				panel3.add(resourcesDateBegin2, cc.xywh(3, 3, 3, 1));
 
 				//---- label_otherLevel ----
 				label_otherLevel.setText("Other Level");
 				label_otherLevel.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
 				ATFieldInfo.assignLabelInfo(label_otherLevel, ResourcesComponents.class, ResourcesComponents.PROPERTYNAME_OTHER_LEVEL);
-				panel3.add(label_otherLevel, cc.xywh(1, 3, 1, 1, CellConstraints.FILL, CellConstraints.DEFAULT));
+				panel3.add(label_otherLevel, cc.xywh(1, 5, 1, 1, CellConstraints.FILL, CellConstraints.DEFAULT));
 
 				//---- resourcesOtherLevel ----
 				resourcesOtherLevel.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
-				panel3.add(resourcesOtherLevel, cc.xywh(3, 3, 3, 1));
+				panel3.add(resourcesOtherLevel, cc.xywh(3, 5, 3, 1));
 			}
 			panel10.add(panel3, cc.xywh(1, 1, 1, 1, CellConstraints.DEFAULT, CellConstraints.FILL));
 
@@ -943,7 +931,6 @@ public class ResourceComponentBasicInfoPanel extends NLADomainEditorFields {
 	private JPanel panel3;
 	private JLabel label_resourcesLevel;
 	public JComboBox resourcesLevel;
-	private JPanel panel12;
 	private JLabel label3;
 	public JTextField resourcesDateBegin2;
 	private JLabel label_otherLevel;
